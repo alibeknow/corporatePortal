@@ -1,0 +1,56 @@
+image: node:13
+
+.init_ssh: &init_ssh |
+  eval $(ssh-agent -s)
+  mkdir -p ~/.ssh
+  chmod 700 ~/.ssh
+  [[ -f /.dockerenv ]] && echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config
+
+cache:
+  untracked: true
+  key:
+    files:
+      - package.json
+  paths:
+    - node_modules/
+
+stages:
+  - build
+  - image
+  - deploy
+
+Node modules:
+  stage: build
+  tags:
+    - main
+  script:
+    - yarn install --prod=false
+
+Create Image TESTING:
+  stage: image
+  dependencies: []
+  tags:
+    - main
+  image: docker:18.09.7-dind
+  script:
+    - docker login registry.gitlab.com -u ${GIT_ACCOUNT} -p ${GIT_PASSWORD}
+    - docker build --build-arg BRANCH=$CI_COMMIT_BRANCH -t registry.gitlab.com/andrey_inihov/corporate-portal .
+    - docker push registry.gitlab.com/andrey_inihov/corporate-portal
+  only:
+    - develop
+
+Deploy TESTING:
+  stage: deploy
+  tags:
+    - main
+  dependencies: []
+  script:
+    - *init_ssh
+    - echo "$TEST_PRIVATE_KEY" | tr -d '\r' | ssh-add - > /dev/null
+    - ssh -tt deploy_user@prt-d-app01.it.sberbank-service.ru "docker login registry.gitlab.com -u ${GIT_ACCOUNT} -p ${GIT_PASSWORD}"
+    - ssh -tt deploy_user@prt-d-app01.it.sberbank-service.ru 'docker pull registry.gitlab.com/andrey_inihov/corporate-portal'
+    - ssh -tt deploy_user@prt-d-app01.it.sberbank-service.ru 'cd /var/www/corporate-portal && docker-compose up -d --no-deps --no-build api'
+  environment:
+    name: staging
+  only:
+    - develop

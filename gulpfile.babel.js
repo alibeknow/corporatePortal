@@ -21,7 +21,7 @@ gulp.task('clean', (done) => {
 });
 
 // Copy non-js files to dist
-gulp.task('copy', () => gulp.src(paths.nonJs)
+gulp.task('copy', () => gulp.src(paths.nonJs, { allowEmpty: true })
     .pipe(plugins.newer('dist'))
     .pipe(gulp.dest('dist')));
 
