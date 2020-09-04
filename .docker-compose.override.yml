@@ -1,0 +1,17 @@
+# override file for local development
+version: '3'
+services:
+  api:
+    ports:
+      - 4000:4000
+      - 9229:9229
+    environment:
+      - PORT=4000
+      - NODE_ENV=development
+    volumes:
+      - .:/usr/src/app
+      - /usr/src/app/node_modules
+    command: yarn start:debug
+  redis:
+    ports:
+      - 6379:6379
