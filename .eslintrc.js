@@ -20,9 +20,10 @@ module.exports = {
       groups: ['builtin', 'external', 'internal', 'parent', 'sibling', 'index'],
       'newlines-between': 'always',
     }],
+    'comma-dangle': ['error', 'always-multiline'],
     'no-restricted-syntax': 'off',
     'no-continue': 'off',
-    'no-unused-vars': ['error', { 'varsIgnorePattern': 'envVars'}]
+    'no-unused-vars': ['error', { 'varsIgnorePattern': 'envVars'}],
   },
 
   parserOptions: {

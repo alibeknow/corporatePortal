@@ -5,9 +5,15 @@ module.exports = {
       id: {
         primaryKey: true,
         type: Sequelize.UUID,
+        defaultValue: Sequelize.UUIDV4,
       },
       name: {
-        type: Sequelize.STRING(255),
+        type: Sequelize.STRING,
+      },
+      description: {
+        type: Sequelize.STRING,
+        unique: true,
+        allowNull: false,
       },
       created_at: {
         type: Sequelize.DATE,

@@ -16,10 +16,10 @@ module.exports = (sequelize, DataTypes) => {
       id: {
         primaryKey: true,
         type: DataTypes.UUID,
+        defaultValue: DataTypes.UUIDV4,
       },
-      name: {
-        type: DataTypes.STRING,
-      },
+      name: { type: DataTypes.STRING },
+      description: { type: DataTypes.STRING, unique: true, allowNull: false },
     },
     {
       sequelize,

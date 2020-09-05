@@ -3,44 +3,24 @@ import path from 'path';
 
 import Sequelize from 'sequelize';
 
-import config from './config';
 import logger from './winston/get-default-logger';
+
+import config from '.';
 
 const db = {};
 
-// connect to postgres testDb
 const sequelizeOptions = {
   dialect: 'postgres',
-  port: config.postgres.port,
-  host: config.postgres.host,
-
   pool: {
     max: 5,
     min: 0,
     idle: 10000,
   },
-  ...(config.postgres.ssl && {
-    ssl: config.postgres.ssl,
-  }),
-  ...(config.postgres.ssl &&
-    config.postgres.ssl_ca_cert && {
-      dialectOptions: {
-        ssl: {
-          ca: config.postgres.ssl_ca_cert,
-        },
-      },
-    }),
   define: {
     underscored: true,
   },
 };
-const sequelize = new Sequelize(
-  config.postgres.db,
-  config.postgres.user,
-  config.postgres.passwd,
-  sequelizeOptions,
-);
-exports = sequelize;
+const sequelize = new Sequelize( config.database, sequelizeOptions);
 const modelsDir = path.normalize(`${__dirname}/../schemas`);
 
 // loop through all files in models directory ignoring hidden files and this file

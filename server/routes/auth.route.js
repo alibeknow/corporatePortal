@@ -1,29 +1,14 @@
-import express from 'express';
-import expressJwt from 'express-jwt';
+import { Router } from 'express';
 
-import AuthCtrl from '../controllers/Auth.controller';
-import config from '../config/config';
+import AuthController from '../controllers/Auth.controller';
 import handleAsyncError from '../helpers/handleAsyncError';
+import validate from '../utils/routeValidation';
 
-const router = express.Router(); // eslint-disable-line new-cap
+const router = new Router();
 
-/**
- * POST /api/auth/login - Returns token if correct username and password is provided
- */
+router.post('/login', validate('login', 'body'), handleAsyncError(AuthController.login));
+router.get('/logout', handleAsyncError(AuthController.logout));
+router.post('/refresh', validate('refresh', 'body'), handleAsyncError(AuthController.refresh));
 
-router.post('/login', handleAsyncError(AuthCtrl.login));
-
-/** GET /api/auth/random-number - Protected route,
- * needs token returned by the above as header.
- * Authorization: Bearer {token}
- */
-router.get(
-  '/random-number',
-  expressJwt({
-    secret: config.jwtSecret,
-    algorithms: ['RS256'],
-  }),
-  handleAsyncError(AuthCtrl.getRandomNumber),
-);
 
 export default router;

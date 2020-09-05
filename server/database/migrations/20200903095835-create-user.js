@@ -6,6 +6,7 @@ module.exports = {
       id: {
         primaryKey: true,
         type: Sequelize.UUID,
+        defaultValue: Sequelize.UUIDV4,
       },
       login: {
         type: Sequelize.STRING,
@@ -14,7 +15,6 @@ module.exports = {
       },
       password: {
         type: Sequelize.STRING,
-        allowNull: false,
       },
       fio: { type: Sequelize.STRING },
       email: { type: Sequelize.STRING },
@@ -29,7 +29,7 @@ module.exports = {
         onDelete: 'SET NULL',
       },
       status_id: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.UUID,
         allowNull: true,
         references: {
           model: 'statuses',
@@ -38,7 +38,7 @@ module.exports = {
         onDelete: 'SET NULL',
       },
       work_position_id: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.UUID,
         allowNull: true,
         references: {
           model: 'work_positions',
@@ -66,12 +66,5 @@ module.exports = {
     });
   },
 
-  down: async () => {
-    /**
-     * Add reverting commands here.
-     *
-     * Example:
-     * await queryInterface.dropTable('users');
-     */
-  },
+  down: async (queryInterface) => queryInterface.dropTable('users'),
 };

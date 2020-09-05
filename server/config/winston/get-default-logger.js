@@ -1,6 +1,6 @@
 import { loggers } from 'winston';
 
-import config from '../config';
+import config from '..';
 
 import createLoggerWithOptions from './loggers-container-accessor';
 

@@ -4,9 +4,10 @@ module.exports = (sequelize, DataTypes) => {
   class UserRoles extends DefaultModel {}
   UserRoles.init(
     {
-      id: {
+      iid: {
         primaryKey: true,
         type: DataTypes.UUID,
+        defaultValue: DataTypes.UUIDV4,
       },
       name: {
         type: DataTypes.STRING,

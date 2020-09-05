@@ -57,6 +57,7 @@ module.exports = (sequelize, DataTypes) => {
       id: {
         primaryKey: true,
         type: DataTypes.UUID,
+        defaultValue: DataTypes.UUIDV4,
       },
       login: {
         type: DataTypes.STRING,
@@ -65,7 +66,6 @@ module.exports = (sequelize, DataTypes) => {
       },
       password: {
         type: DataTypes.STRING,
-        allowNull: false,
       },
       fio: { type: DataTypes.STRING },
       email: { type: DataTypes.STRING },

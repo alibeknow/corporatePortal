@@ -1,6 +1,6 @@
 import fetch from 'jest-fetch-mock'; // eslint-disable-line import/no-extraneous-dependencies, import/newline-after-import
 
-import config from './server/config/config';
+import config from './server/config';
 import { createLoggerWithOptions } from './server/config/winston';
 
 /**

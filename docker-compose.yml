@@ -12,18 +12,20 @@ services:
       - REDIS_URL=redis://redis:6379/0
       - SESSION_SECRET=7d58b345d95b5b021dc16fd5b48a8f8b
       - API_VERSION=1.0
-      - JWT_SECRET=jwtsecret
-      - UNIQUE_NAME_PG_DB=corporate_portal
-      - UNIQUE_NAME_PG_TEST_DB=corporate_portal_test
-      - UNIQUE_NAME_PG_PORT=5432
-      - UNIQUE_NAME_PG_HOST=db
-      - UNIQUE_NAME_PG_USER=postgres
-      - UNIQUE_NAME_PG_PASSWD=developer
-
     depends_on:
       - db
       - redis
     command: yarn start
+
+  commands:
+    image: registry.gitlab.com/andrey_inihov/corporate-portal
+    environment:
+      - NODE_ENV=testing # test зарезервировано для jest
+      - DATABASE_URL=postgres://postgres:developer@db:5432/corporate_portal
+      - REDIS_URL=redis://redis:6379/0
+      - SESSION_SECRET=7d58b345d95b5b021dc16fd5b48a8f8b
+      - API_VERSION=1.0
+    command: yarn start:commands
 
   db:
     image: postgres
