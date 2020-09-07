@@ -49,7 +49,7 @@ Deploy TESTING:
     - echo "$TEST_PRIVATE_KEY" | tr -d '\r' | ssh-add - > /dev/null
     - ssh -tt deploy_user@prt-d-app01.it.sberbank-service.ru "docker login registry.gitlab.com -u ${GIT_ACCOUNT} -p ${GIT_PASSWORD}"
     - ssh -tt deploy_user@prt-d-app01.it.sberbank-service.ru 'docker pull registry.gitlab.com/andrey_inihov/corporate-portal'
-    - ssh -tt deploy_user@prt-d-app01.it.sberbank-service.ru 'cd /var/www/corporate-portal && docker-compose up -d --no-deps --no-build api'
+    - ssh -tt deploy_user@prt-d-app01.it.sberbank-service.ru 'cd /var/www/corporate-portal && docker-compose up -d --no-deps --no-build api commands'
   environment:
     name: staging
   only:
