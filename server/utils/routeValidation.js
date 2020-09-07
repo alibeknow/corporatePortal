@@ -6,13 +6,13 @@ const schema = {
     body: Joi.object({
       login: Joi.string().required(),
       password: Joi.string().required(),
-    })
+    }),
   },
   refresh: {
     body: Joi.object({
       token: Joi.string().required(),
       refreshToken: Joi.string().uuid().required(),
-    })
+    }),
   },
 };
 

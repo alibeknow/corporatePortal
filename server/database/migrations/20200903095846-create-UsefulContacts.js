@@ -1,78 +1,73 @@
-
 module.exports = {
-  up: (queryInterface, Sequelize) => {
-    return queryInterface.createTable('useful_contacts', {
-      id: {
-        primaryKey: true,
-        type: Sequelize.UUID,
-        defaultValue: Sequelize.UUIDV4,
+  up: (queryInterface, Sequelize) => queryInterface.createTable('useful_contacts', {
+    id: {
+      primaryKey: true,
+      type: Sequelize.UUID,
+      defaultValue: Sequelize.UUIDV4,
+    },
+    created_at: {
+      type: Sequelize.DATE(),
+      allowNull: false,
+    },
+    updated_at: {
+      type: Sequelize.DATE(),
+      allowNull: false,
+    },
+    owner_id: {
+      type: Sequelize.UUID,
+      allowNull: true,
+      references: {
+        model: 'users',
+        key: 'id',
       },
-      created_at: {
-        type: Sequelize.DATE(),
-        allowNull: false,
+      onDelete: 'SET NULL',
+    },
+    mentor_id: {
+      type: Sequelize.UUID,
+      allowNull: true,
+      references: {
+        model: 'users',
+        key: 'id',
       },
-      updated_at: {
-        type: Sequelize.DATE(),
-        allowNull: false,
+      onDelete: 'SET NULL',
+    },
+    curator__kdl_id: {
+      type: Sequelize.UUID,
+      allowNull: true,
+      references: {
+        model: 'users',
+        key: 'id',
       },
-      owner_id: {
-        type: Sequelize.UUID,
-        allowNull: true,
-        references: {
-          model: 'users',
-          key: 'id',
-        },
-        onDelete: 'SET NULL',
+      onDelete: 'SET NULL',
+    },
+    hr_partner_id: {
+      type: Sequelize.UUID,
+      allowNull: true,
+      references: {
+        model: 'users',
+        key: 'id',
       },
-      mentor_id: {
-        type: Sequelize.UUID,
-        allowNull: true,
-        references: {
-          model: 'users',
-          key: 'id',
-        },
-        onDelete: 'SET NULL',
+      onDelete: 'SET NULL',
+    },
+    timekeeper_id: {
+      type: Sequelize.UUID,
+      allowNull: true,
+      references: {
+        model: 'users',
+        key: 'id',
       },
-      curator__kdl_id: {
-        type: Sequelize.UUID,
-        allowNull: true,
-        references: {
-          model: 'users',
-          key: 'id',
-        },
-        onDelete: 'SET NULL',
+      onDelete: 'SET NULL',
+    },
+    deputy_user_id: {
+      type: Sequelize.UUID,
+      allowNull: true,
+      references: {
+        model: 'users',
+        key: 'id',
       },
-      hr_partner_id: {
-        type: Sequelize.UUID,
-        allowNull: true,
-        references: {
-          model: 'users',
-          key: 'id',
-        },
-        onDelete: 'SET NULL',
-      },
-      timekeeper_id: {
-        type: Sequelize.UUID,
-        allowNull: true,
-        references: {
-          model: 'users',
-          key: 'id',
-        },
-        onDelete: 'SET NULL',
-      },
-      deputy_user_id: {
-        type: Sequelize.UUID,
-        allowNull: true,
-        references: {
-          model: 'users',
-          key: 'id',
-        },
-        onDelete: 'SET NULL',
-      },
-    });
-  },
+      onDelete: 'SET NULL',
+    },
+  }),
 
-  down: (queryInterface) => {
-    return queryInterface.dropTable('useful_contacts');
-  },
+  down: (queryInterface) => queryInterface.dropTable('useful_contacts'),
 };

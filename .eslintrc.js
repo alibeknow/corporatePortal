@@ -1,5 +1,5 @@
 module.exports = {
-  extends: ['airbnb-base', 'prettier'],
+  extends: ['airbnb-base'],
   parser: 'babel-eslint',
   rules: {
     'newline-per-chained-call': 'off',
@@ -23,7 +23,8 @@ module.exports = {
     'comma-dangle': ['error', 'always-multiline'],
     'no-restricted-syntax': 'off',
     'no-continue': 'off',
-    'no-unused-vars': ['error', { 'varsIgnorePattern': 'envVars'}],
+    'no-unused-vars': ['error', { varsIgnorePattern: 'envVars' }],
+    'object-curly-newline': 'off',
   },
 
   parserOptions: {

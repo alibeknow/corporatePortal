@@ -20,7 +20,7 @@ const sequelizeOptions = {
     underscored: true,
   },
 };
-const sequelize = new Sequelize( config.database, sequelizeOptions);
+const sequelize = new Sequelize(config.database, sequelizeOptions);
 const modelsDir = path.normalize(`${__dirname}/../schemas`);
 
 // loop through all files in models directory ignoring hidden files and this file

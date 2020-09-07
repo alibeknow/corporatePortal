@@ -29,6 +29,5 @@ export default class RedisService {
       params.push('EX', expiresIn);
     }
     return this.setAsync(...params);
-
   }
 }

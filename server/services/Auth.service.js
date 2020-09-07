@@ -15,7 +15,7 @@ export default class AuthService {
   static async authenticate(login, password) {
     const instance = await UserModel.findOne({
       where: { login },
-     });
+    });
     if (!instance) throw new APIError(`Пользователь ${login} не найден`);
     const { password: userPassword, ...user } = instance.toJSON();
     if (userPassword) {
@@ -53,10 +53,9 @@ export default class AuthService {
     const storedRefreshToken = await redis.get(`${user.id}:refresh-token`);
     if (!storedRefreshToken || (storedRefreshToken !== refreshToken)) {
       throw new APIError('Ошибка обновления токена. Авторизуйтесь повторно');
-    };
+    }
     const newRefreshToken = await this.generateRefreshToken(user.id);
     const newToken = await this.generateJWT(user);
     return { token: newToken, refreshToken: newRefreshToken };
   }
-
 }

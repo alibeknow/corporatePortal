@@ -1,7 +1,6 @@
 /* Сервис для различных операций с файловой системой */
 import fs from 'fs';
 
-
 export default class FileService {
   /* Получение списка файлов в папке и ее подпапках */
   static getFiles(dir) {
@@ -17,6 +16,5 @@ export default class FileService {
       }
     });
     return result;
-
   }
 }

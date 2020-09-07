@@ -10,10 +10,9 @@ export default {
   },
   activeDirectory: {
     url: process.env.AD_URL || 'ldap://it.sberbank-service.ru:389',
-    username: process.env.AD_USERNAME ||  'srv.ac-portal-ldap',
-    password: process.env.AD_PASSWORD ||  'fskJ5K3r8H',
-    baseDN: process.env.AD_BASE_DN ||  'dc=it,dc=sberbank-service,dc=ru',
-    domain: process.env.AD_DOMAIN ||  'it',
+    username: process.env.AD_USERNAME || 'srv.ac-portal-ldap',
+    password: process.env.AD_PASSWORD || 'fskJ5K3r8H',
+    baseDN: process.env.AD_BASE_DN || 'dc=it,dc=sberbank-service,dc=ru',
+    domain: process.env.AD_DOMAIN || 'it',
   },
 };
-

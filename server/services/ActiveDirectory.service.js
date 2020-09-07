@@ -23,6 +23,8 @@ export default class ActiveDirectoryService {
     SECURITY_MODERATOR: 'PRT-SECURITY-Moderator',
   };
 
+  static COMMON_GROUP = 'PRT-User';
+
   constructor() {
     const client = new ActiveDirectory(config.activeDirectory);
     /* Промисифицируем методы клиента, чтобы не утонуть в callback hell */
@@ -39,9 +41,20 @@ export default class ActiveDirectoryService {
     }
   }
 
-  /* Получение только нужных нам групп */
+  /* Получение всех нужных нам групп */
   async getGroups() {
     const groups = await this.findGroups('CN=PRT-*');
     return groups.filter(({ cn }) => Object.values(ActiveDirectoryService.GROUPS).includes(cn));
+  }
+
+  async getUsers() {
+    const users = await this.getUsersForGroup(ActiveDirectoryService.COMMON_GROUP);
+    return users;
+  }
+
+  /* Получение групп для пользователя с фильтром по "нашим" */
+  async getUserGroups(login) {
+    const allGroups = await this.getGroupMembershipForUser(login) || [];
+    return allGroups.filter(({ cn }) => Object.values(ActiveDirectoryService.GROUPS).includes(cn));
   }
 }

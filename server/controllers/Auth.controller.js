@@ -1,7 +1,6 @@
 import AuthService from '../services/Auth.service';
 import RedisService from '../services/Redis.service';
 
-
 const redis = new RedisService();
 
 export default class AuthController {
@@ -27,5 +26,4 @@ export default class AuthController {
 
     return res.sendStatus(200);
   }
-
 }

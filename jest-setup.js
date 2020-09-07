@@ -9,9 +9,9 @@ import { createLoggerWithOptions } from './server/config/winston';
  * our default logger here so files we test that make use of it can access it.
  */
 const loggerOptions = {
-    name: config.loggerName,
-    env: config.env,
-    logLevel: config.logLevel,
+  name: config.loggerName,
+  env: config.env,
+  logLevel: config.logLevel,
 };
 createLoggerWithOptions(loggerOptions);
 

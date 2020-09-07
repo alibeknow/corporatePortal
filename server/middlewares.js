@@ -28,4 +28,3 @@ export const isAuthenticated = handleAsyncError(async (req, res, next) => {
     throw new APIError(ERROR_MESSAGE, 401, true);
   }
 });
-

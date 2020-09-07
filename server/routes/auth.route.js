@@ -10,5 +10,4 @@ router.post('/login', validate('login', 'body'), handleAsyncError(AuthController
 router.get('/logout', handleAsyncError(AuthController.logout));
 router.post('/refresh', validate('refresh', 'body'), handleAsyncError(AuthController.refresh));
 
-
 export default router;

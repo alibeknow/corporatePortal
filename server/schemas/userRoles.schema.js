@@ -1,18 +1,9 @@
 import DefaultModel from '../models/Default.model';
 
-module.exports = (sequelize, DataTypes) => {
+module.exports = (sequelize) => {
   class UserRoles extends DefaultModel {}
   UserRoles.init(
-    {
-      iid: {
-        primaryKey: true,
-        type: DataTypes.UUID,
-        defaultValue: DataTypes.UUIDV4,
-      },
-      name: {
-        type: DataTypes.STRING,
-      },
-    },
+    {},
     {
       sequelize,
       modelName: 'userRoles',

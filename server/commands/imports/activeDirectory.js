@@ -3,6 +3,8 @@ import db from '../../config/sequelize';
 import ActiveDirectoryService from '../../services/ActiveDirectory.service';
 import logger from '../../config/winston/get-default-logger';
 import RoleModel from '../../models/Role.model';
+import UserModel from '../../models/User.model';
+import HelperService from '../../services/HelperService';
 
 const client = new ActiveDirectoryService();
 
@@ -20,7 +22,26 @@ module.exports = {
         }, { transaction });
         groupInstances.push(instance);
       }
+      /* Создаем карту для быстрого доступа к группе по имени */
+      const groupsMap = HelperService.createMapFromArray(groupInstances, 'name');
 
+      /* Получаем всех пользователей группы ВКП Пользователи и импортируем их */
+      const users = await client.getUsers();
+      const userInstances = [];
+      for (const { cn, sAMAccountName, mail } of users) {
+        const [instance] = await UserModel.upsert({
+          login: sAMAccountName,
+          fio: cn,
+          email: mail,
+        }, { transaction });
+        userInstances.push(instance);
+      }
+
+      /* Проходим по каждому пользователю и устанавливаем ему роли */
+      for (const user of userInstances) {
+        const userGroups = await client.getUserGroups(user.login);
+        await user.setRoles(userGroups.map(({ cn }) => groupsMap[cn]?.id).filter(Boolean), { transaction });
+      }
 
       await transaction.commit();
     } catch (error) {
@@ -29,5 +50,5 @@ module.exports = {
     }
   },
   schedule: '*/5 * * * *', // every 5 minutes
-  excludeEnv: ['local'],
+  excludeEnv: ['development'],
 };

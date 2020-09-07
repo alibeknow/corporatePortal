@@ -1,5 +1,4 @@
-import DefaultModel from '../models/Default.model'
-;
+import DefaultModel from '../models/Default.model';
 
 module.exports = (sequelize, DataTypes) => {
   class User extends DefaultModel {
@@ -10,9 +9,6 @@ module.exports = (sequelize, DataTypes) => {
       });
       models.user.belongsToMany(models.role, {
         through: models.userRoles,
-        otherKey: 'roleId',
-        foreignKey: 'userId',
-        as: 'user',
       });
       models.user.hasMany(models.usefulContacts, {
         foreignKey: 'ownerId',
