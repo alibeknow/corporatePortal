@@ -13,4 +13,5 @@ COPY . /usr/src/app
 
 # Building app
 RUN yarn build
+RUN yarn run apidoc
 

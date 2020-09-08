@@ -4,7 +4,7 @@ module.exports = {
     password: process.env.UNIQUE_NAME_PG_PASSWD || 'developer',
     database: process.env.UNIQUE_NAME_PG_DB || 'corporate_portal',
     port: process.env.UNIQUE_PORT_NUMBER || 5432,
-    host: process.env.UNIQUE_NAME_PG_HOST || 'db',
+    host: process.env.UNIQUE_NAME_PG_HOST || 'localhost',
     dialect: 'postgres',
     operatorsAliases: false,
     define: {
