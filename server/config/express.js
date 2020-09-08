@@ -5,7 +5,6 @@ import compress from 'compression';
 import methodOverride from 'method-override';
 import httpStatus from 'http-status';
 import expressWinston from 'express-winston';
-import helmet from 'helmet';
 import session from 'express-session';
 import connectRedis from 'connect-redis';
 
@@ -32,8 +31,6 @@ app.use(cookieParser());
 app.use(compress());
 app.use(methodOverride());
 
-// secure apps by setting various HTTP headers
-app.use(helmet());
 if (config.env !== 'production') {
   app.use('/apidoc', express.static('apidoc'));
 }
@@ -97,10 +94,10 @@ app.use((err, req, res, next) => res.status(err.status).json({ // eslint-disable
   stack: config.env === 'development' ? err.stack : {},
 }));
 
-// app.use((req, res, next) => {
-//   req.session.save();
+app.use((req, res, next) => {
+  req.session.save();
 
-//   next();
-// });
+  next();
+});
 
 export default app;

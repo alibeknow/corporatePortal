@@ -6,9 +6,9 @@ import validate from '../utils/routeValidation';
 
 const router = new Router();
 /**
- * @api {post} api/v1.0/login Аутентификация пользователя
+ * @api {post} /api/v1.0/login Аутентификация пользователя
  * @apiVersion 1.0.0
- * @apiName login
+ * @apiName Login
  * @apiGroup Auth
  * @apiParam (Body) {Object} request
  * @apiParam (Body) {String} request.login логин пользователя
@@ -33,9 +33,9 @@ const router = new Router();
  */
 router.post('/login', validate('login', 'body'), handleAsyncError(AuthController.login));
 /**
- * @api {get} api/v1.0/logout выход из системы
+ * @api {get} /api/v1.0/logout Выход из системы
  * @apiVersion 1.0.0
- * @apiName logout
+ * @apiName Logout
  * @apiGroup Auth
  * @apiSuccessExample {string}  Пример ответа:
  *     HTTP/1.1 200 OK
@@ -43,9 +43,9 @@ router.post('/login', validate('login', 'body'), handleAsyncError(AuthController
  */
 router.get('/logout', handleAsyncError(AuthController.logout));
 /**
- * @api {post} api/v1.0/refresh Обновить токен
+ * @api {post} /api/v1.0/refresh Обновить токен
  * @apiVersion 1.0.0
- * @apiName Refresh Token
+ * @apiName RefreshToken
  * @apiGroup Auth
  *
  * @apiParam (Body) {Object} request

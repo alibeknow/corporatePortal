@@ -1679,7 +1679,7 @@ apidoc-core@^0.12.0:
     lodash "^4.17.20"
     semver "~7.3.2"
 
-apidoc@*, apidoc@false0.25.0:
+apidoc@*, apidoc@0.25.0:
   version "0.25.0"
   resolved "https://registry.yarnpkg.com/apidoc/-/apidoc-0.25.0.tgz#d59ad8724e091f4a1e349ff50cf4fb4dd3de6142"
   integrity sha512-5g9fp8OffXZOdBTzm4BBvV5Vw54s+NmKnGZIUKuH+gRTqqJuRJpcGN6sz6WnjJ+NcvXhB7rIRp6FhtJahazx2Q==
@@ -4546,7 +4546,7 @@ gulp-sourcemaps@^2.6.5:
     strip-bom-string "1.X"
     through2 "2.X"
 
-gulp@^4.0.0, gulp@false4.0.2:
+gulp@4.0.2, gulp@^4.0.0:
   version "4.0.2"
   resolved "https://registry.yarnpkg.com/gulp/-/gulp-4.0.2.tgz#543651070fd0f6ab0a0650c6a3e6ff5a7cb09caa"
   integrity sha512-dvEs27SCZt2ibF29xYgmnwwCYZxdxhQ/+LFWlbAW8y7jt68L/65402Lz3+CKy0Ov4rOs+NERmDq7YlZaDqUIfA==
