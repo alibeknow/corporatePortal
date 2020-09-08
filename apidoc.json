@@ -1,0 +1,7 @@
+{
+  "name": "Sberbank Service corporate portal",
+  "version": "1.0.0",
+  "description": "Sberbank Service corporate portal REST API documentation",
+  "title": "Custom apiDoc browser title",
+  "url": "http://localhost:4000"
+}

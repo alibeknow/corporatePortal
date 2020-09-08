@@ -34,7 +34,9 @@ app.use(methodOverride());
 
 // secure apps by setting various HTTP headers
 app.use(helmet());
-
+if (config.env !== 'production') {
+  app.use('/apidoc', express.static('apidoc'));
+}
 app.use(session({
   store: new (connectRedis(session))({ client: redis.client }),
   name: 'sid',
