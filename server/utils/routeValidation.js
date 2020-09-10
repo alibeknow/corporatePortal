@@ -14,6 +14,18 @@ const schema = {
       refreshToken: Joi.string().uuid().required(),
     }),
   },
+  getUsers: {
+    body: Joi.object({
+      filters: Joi.object({
+        departmentName: Joi.string(),
+        phone: Joi.string(),
+        fio: Joi.string(),
+      }),
+      page: Joi.number().default(1),
+      size: Joi.number().default(50),
+
+    }),
+  },
 };
 
 /* Middleware для валидации запросов. Принимает ключ и тип валидации, данные должны быть описаны
