@@ -1,0 +1,101 @@
+@import "client/styles/colors";
+@import "client/styles/sizes";
+
+.user-card {
+  .ant-drawer-body {
+    padding-top: 44px;
+    padding-right: 45px;
+  }
+
+  .ant-drawer-content-wrapper {
+    box-shadow: none !important;
+  }
+
+  .ant-drawer-content {
+    position: relative;
+    z-index: 1;
+    overflow: visible;
+  }
+
+  &__close {
+    span {
+      position: absolute;
+      top: 35px;
+      left: -34px;
+      z-index: 1;
+      font-size: 19px;
+      width: 34px;
+      height: 34px;
+      text-align: center;
+      border-radius: 17px;
+      background: $blue-light-background;
+      line-height: 36px;
+      color: $text-turquoise;
+      cursor: pointer;
+      transition: all .4s ease;
+    }
+
+    &--hide {
+      span {
+        left: 0;
+      }
+
+      .card-toggle {
+        left: 0;
+      }
+    }
+  }
+
+  &__row {
+    margin-bottom: $big;
+
+    &--large {
+      margin-bottom: $large;
+    }
+  }
+
+  &__dictionary-title {
+    font-size: 12px;
+    line-height: 17px;
+    color: $text-light-gray;
+  }
+
+  &__username {
+    margin-right: $big;
+    margin-bottom: $small;
+  }
+
+  &__username-text {
+    display: block;
+    font-size: 18px;
+    line-height: 26px;
+    font-weight: bold;
+  }
+
+  &__user-position {
+    color: $text-gray;
+    @include small-font-size;
+  }
+
+  &__button {
+    background-color: $white;
+    color: $green;
+    border: 1px solid $green;
+    border-radius: 6px;
+    height: 46px;
+    width: calc(50% - 15px);
+    font-size: 15px;
+    line-height: 21px;
+    margin-right: $big;
+
+    &:hover, &:focus {
+      border: 1px solid $green;
+      background-color: $green-hover;
+      color: $white;
+    }
+
+    &:last-child {
+      margin-right: 0;
+    }
+  }
+}

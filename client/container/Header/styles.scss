@@ -1,0 +1,84 @@
+@import "client/styles/colors";
+@import "client/styles/sizes";
+
+.header {
+
+  z-index: 1001;
+
+  &__row {
+    background-color: $white;
+    height: 80px;
+    padding: 0 $Xlarge;
+    box-shadow: 0 1px 1px rgba(130, 141, 150, 0.18);
+    position: relative;
+  }
+
+  &__logo-image {
+    height: 46px;
+  }
+
+  &__menu-item {
+    color: $text-gray;
+    margin-right: $big;
+    cursor: pointer;
+    @include normal-font-size;
+
+    &:last-child {
+      margin-right: 0;
+    }
+
+    &:hover {
+      color: $text-black;
+    }
+  }
+
+  &__control {
+    display: flex;
+    align-items: center;
+  }
+
+  &__control-icon {
+    color: $text-gray;
+    font-size: 19px;
+    margin-right: $small;
+    cursor: pointer;
+
+    &:hover {
+      color: $text-black;
+    }
+  }
+
+  &__control-user {
+    display: inline-block;
+  }
+
+  &__control-user-name {
+    display: block;
+    color: $text-black;
+    font-size: 15px;
+    line-height: 22px;
+    margin-left: 10px;
+  }
+
+  &__find {
+    width: 640px;
+    margin-right: 10px;
+    height: 46px;
+    border-radius: 6px;
+    background-color: $gray-light-background;
+    border: 1px solid $border-light-gray;
+
+    .ant-input {
+      background-color: $gray-light-background;
+
+      &::-webkit-input-placeholder {
+        color: $text-light-gray;
+      }
+    }
+  }
+
+  &__filter-icon {
+    font-size: 24px;
+    color: $text-gray;
+  }
+}
