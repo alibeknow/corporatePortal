@@ -18,7 +18,7 @@ module.exports = merge(common, {
   plugins: [
     new HtmlWebpackPlugin({
       id: 'root',
-      title: 'marketplace',
+      title: 'corporate-portal',
       template: path.join(__dirname, './index.html')
     })
   ],
