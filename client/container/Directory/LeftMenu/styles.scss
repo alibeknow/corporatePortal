@@ -1,0 +1,72 @@
+@import "client/styles/colors";
+@import "client/styles/sizes";
+
+.left-menu {
+
+  .ant-drawer-content-wrapper {
+    box-shadow: none !important;
+  }
+
+  .ant-drawer-content {
+    position: relative;
+    z-index: 1;
+    overflow: visible;
+  }
+
+  .ant-drawer-body {
+    padding-top: 44px;
+    padding-left: 46px;
+  }
+
+  &__row {
+    margin-bottom: $big;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  &__dictionary-list {
+    padding-left: 0;
+    list-style: none;
+  }
+
+  &__dictionary-item {
+    margin-bottom: 10px;
+    font-size: 15px;
+    line-height: 24px;
+    color: $text-black;
+  }
+
+  &__close {
+    position: absolute;
+    top: 144px;
+    right: -38px;
+    font-size: 19px;
+    width: 34px;
+    height: 34px;
+    text-align: center;
+    border-radius: 17px;
+    background: $blue-light-background;
+    line-height: 36px;
+    color: $text-turquoise;
+    cursor: pointer;
+    z-index: 1;
+  }
+
+  &__find {
+    width: 268px;
+    height: 37px;
+    border-radius: 4px;
+    background-color: $gray-light-background;
+    border: 1px solid $border-light-gray;
+
+    .ant-input {
+      background-color: $gray-light-background;
+
+      &::-webkit-input-placeholder {
+        color: $text-light-gray;
+      }
+    }
+  }
+}
