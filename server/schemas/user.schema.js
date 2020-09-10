@@ -4,7 +4,7 @@ module.exports = (sequelize, DataTypes) => {
   class User extends DefaultModel {
     static associate(models) {
       models.user.hasOne(models.personalData, {
-        foreignKey: 'userDataId',
+        foreignKey: 'userId',
         as: 'userData',
       });
       models.user.belongsToMany(models.role, {
@@ -45,6 +45,10 @@ module.exports = (sequelize, DataTypes) => {
       models.user.belongsTo(models.user, {
         foreignLey: 'managerId',
         as: 'manager',
+      });
+      models.user.belongsTo(models.departmentStructure, {
+        foreignKey: 'departmentId',
+        as: 'department',
       });
     }
   }
