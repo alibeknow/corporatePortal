@@ -1,5 +1,5 @@
 import React from 'react';
-import {Row, Col, Input} from 'antd';
+import { Row, Col, Input } from 'antd';
 
 import { images } from '../../static';
 
