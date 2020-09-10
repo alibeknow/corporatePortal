@@ -4,7 +4,7 @@ import ActiveDirectoryService from '../../services/ActiveDirectory.service';
 import logger from '../../config/winston/get-default-logger';
 import RoleModel from '../../models/Role.model';
 import UserModel from '../../models/User.model';
-import HelperService from '../../services/HelperService';
+import HelperService from '../../services/Helper.service';
 
 const client = new ActiveDirectoryService();
 
