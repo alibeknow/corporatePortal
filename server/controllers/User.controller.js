@@ -9,4 +9,10 @@ export default class UserController {
     const result = await UserService.getUsers({ limit, offset, filters });
     res.json(result);
   }
+
+  static async getUser(req, res) {
+    const { id } = req.params;
+    const result = await UserService.getUser(id);
+    res.json(result);
+  }
 }

@@ -12,6 +12,6 @@ router.get('/health-check', (req, res) => res.send('OK'));
 router.use('/auth', authRoutes);
 
 /* Все остальные роуты делаем защищенными */
-router.use('/', isAuthenticated, protectedRoutes);
+router.use('/', protectedRoutes);
 
 export default router;

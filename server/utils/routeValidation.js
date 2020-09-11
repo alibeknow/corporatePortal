@@ -26,6 +26,12 @@ const schema = {
 
     }),
   },
+  getUser: {
+    params: Joi.object({
+      id: Joi.string().uuid().required(),
+
+    }),
+  },
 };
 
 /* Middleware для валидации запросов. Принимает ключ и тип валидации, данные должны быть описаны

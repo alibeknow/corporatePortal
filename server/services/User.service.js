@@ -42,4 +42,27 @@ export default class UserService {
     });
     return getPagingData({ data: result, limit });
   }
+
+  static async getUser(id) {
+    const result = await UserModel.findByPk(id, {
+      attributes: ['fio', 'phone'],
+      include: [
+        { model: db.workPosition, attributes: ['name'], as: 'workPosition' },
+        {
+          model: db.personalData,
+          as: 'userData',
+        },
+        {
+          model: db.departmentStructure,
+          attributes: ['name'],
+          as: 'department',
+        },
+        {
+          model: db.departmentStructure,
+          attributes: ['name'],
+          as: 'department',
+        },
+      ] });
+    return result;
+  }
 }
