@@ -47,7 +47,7 @@ module.exports = (sequelize, DataTypes) => {
         as: 'manager',
       });
       models.user.belongsTo(models.departmentStructure, {
-        foreignKey: 'departmentId',
+        foreignKey: 'department_stractures_id',
         as: 'department',
       });
     }

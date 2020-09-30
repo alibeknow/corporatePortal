@@ -7,6 +7,7 @@ import httpStatus from 'http-status';
 import expressWinston from 'express-winston';
 import session from 'express-session';
 import connectRedis from 'connect-redis';
+import cors from 'cors';
 
 import routes from '../routes';
 import APIError from '../helpers/APIError';
@@ -24,6 +25,7 @@ const redis = new RedisService();
 const app = express();
 
 // parse body params and attache them to req.body
+app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 

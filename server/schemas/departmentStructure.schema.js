@@ -4,7 +4,7 @@ module.exports = (sequelize, DataTypes) => {
   class DepartmentStructure extends DefaultModel {
     static associate(models) {
       models.departmentStructure.hasMany(models.user, {
-        foreignKey: 'departmentId',
+        foreignKey: 'department_stractures_id',
         as: 'department',
       });
       models.departmentStructure.belongsTo(models.departmentStructure, {
