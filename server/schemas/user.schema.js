@@ -1,54 +1,30 @@
-import DefaultModel from '../models/Default.model';
+import DefaultModel from "../models/Default.model";
 
 module.exports = (sequelize, DataTypes) => {
   class User extends DefaultModel {
     static associate(models) {
       models.user.hasOne(models.personalData, {
-        foreignKey: 'userId',
-        as: 'userData',
+        foreignKey: "userId",
+        as: "userData"
       });
       models.user.belongsToMany(models.role, {
-        through: models.userRoles,
-      });
-      models.user.hasMany(models.usefulContacts, {
-        foreignKey: 'ownerId',
-        as: 'owner',
-      });
-      models.user.hasMany(models.usefulContacts, {
-        foreignKey: 'mentorId',
-        as: 'mentor',
-      });
-      models.user.hasMany(models.usefulContacts, {
-        foreignKey: 'curatorKdlId',
-        as: 'curatorKdl',
-      });
-      models.user.hasMany(models.usefulContacts, {
-        foreignKey: 'hrPartnerId',
-        as: 'hrPartner',
-      });
-      models.user.hasMany(models.usefulContacts, {
-        foreignKey: 'timekeeperId',
-        as: 'timekeeper',
-      });
-      models.user.hasMany(models.usefulContacts, {
-        foreignKey: 'deputyUserId',
-        as: 'deputyUser',
+        through: models.userRoles
       });
       models.user.belongsTo(models.status, {
-        foreignKey: 'statusId',
-        as: 'status',
+        foreignKey: "statusId",
+        as: "status"
       });
       models.user.belongsTo(models.workPosition, {
-        foreignKey: 'workPositionId',
-        as: 'workPosition',
+        foreignKey: "workPositionId",
+        as: "workPosition"
       });
       models.user.belongsTo(models.user, {
-        foreignLey: 'managerId',
-        as: 'manager',
+        foreignLey: "managerId",
+        as: "manager"
       });
       models.user.belongsTo(models.departmentStructure, {
-        foreignKey: 'department_stractures_id',
-        as: 'department',
+        foreignKey: "department_stractures_id",
+        as: "department"
       });
     }
   }
@@ -57,25 +33,25 @@ module.exports = (sequelize, DataTypes) => {
       id: {
         primaryKey: true,
         type: DataTypes.UUID,
-        defaultValue: DataTypes.UUIDV4,
+        defaultValue: DataTypes.UUIDV4
       },
       login: {
         type: DataTypes.STRING,
         allowNull: false,
-        unique: true,
+        unique: true
       },
       password: {
-        type: DataTypes.STRING,
+        type: DataTypes.STRING
       },
       fio: { type: DataTypes.STRING },
       email: { type: DataTypes.STRING },
-      phone: { type: DataTypes.STRING },
+      phone: { type: DataTypes.STRING }
     },
     {
       sequelize,
-      modelName: 'user',
-      timestamps: true,
-    },
+      modelName: "user",
+      timestamps: true
+    }
   );
   return User;
 };
