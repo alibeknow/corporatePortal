@@ -1,12 +1,9 @@
-import DefaultModel from '../models/Default.model';
+import DefaultModel from "../models/Default.model";
 
 module.exports = (sequelize, DataTypes) => {
   class WorkPosition extends DefaultModel {
     static associate(models) {
-      models.workPosition.hasMany(models.user, {
-        foreignKey: 'workPositionId',
-        as: 'workPosition',
-      });
+      models.workPosition.hasMany(models.user);
     }
   }
   WorkPosition.init(
@@ -14,17 +11,17 @@ module.exports = (sequelize, DataTypes) => {
       id: {
         primaryKey: true,
         type: DataTypes.UUID,
-        defaultValue: DataTypes.UUIDV4,
+        defaultValue: DataTypes.UUIDV4
       },
       name: {
-        type: DataTypes.STRING(255),
-      },
+        type: DataTypes.STRING(255)
+      }
     },
     {
       sequelize,
-      modelName: 'workPosition',
-      timestamps: true,
-    },
+      modelName: "workPosition",
+      timestamps: true
+    }
   );
   return WorkPosition;
 };

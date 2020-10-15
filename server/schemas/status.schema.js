@@ -1,12 +1,9 @@
-import DefaultModel from '../models/Default.model';
+import DefaultModel from "../models/Default.model";
 
 module.exports = (sequelize, DataTypes) => {
   class Status extends DefaultModel {
     static associate(models) {
-      models.status.hasMany(models.user, {
-        foreignKey: 'statusId',
-        as: 'status',
-      });
+      models.status.hasMany(models.user);
     }
   }
   Status.init(
@@ -14,18 +11,18 @@ module.exports = (sequelize, DataTypes) => {
       id: {
         primaryKey: true,
         type: DataTypes.UUID,
-        defaultValue: DataTypes.UUIDV4,
+        defaultValue: DataTypes.UUIDV4
       },
       states: {
         type: DataTypes.ENUM,
-        values: ['active', 'fired', 'vacation'],
-      },
+        values: ["active", "fired", "vacation"]
+      }
     },
     {
       sequelize,
-      modelName: 'status',
-      timestamps: true,
-    },
+      modelName: "status",
+      timestamps: true
+    }
   );
   return Status;
 };
