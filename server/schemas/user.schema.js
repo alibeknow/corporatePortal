@@ -3,29 +3,18 @@ import DefaultModel from "../models/Default.model";
 module.exports = (sequelize, DataTypes) => {
   class User extends DefaultModel {
     static associate(models) {
-      models.user.hasOne(models.personalData, {
-        foreignKey: "userId",
-        as: "userData"
-      });
+      models.user.hasOne(models.personalData);
       models.user.belongsToMany(models.role, {
         through: models.userRoles
       });
-      models.user.belongsTo(models.status, {
-        foreignKey: "statusId",
-        as: "status"
-      });
-      models.user.belongsTo(models.workPosition, {
-        foreignKey: "workPositionId",
-        as: "workPosition"
-      });
+      models.user.belongsTo(models.status);
+      models.user.belongsTo(models.workPosition);
+      models.user.belongsTo(models.geoPoint);
       models.user.belongsTo(models.user, {
         foreignLey: "managerId",
         as: "manager"
       });
-      models.user.belongsTo(models.departmentStructure, {
-        foreignKey: "department_stractures_id",
-        as: "department"
-      });
+      models.user.belongsTo(models.departmentStructure);
     }
   }
   User.init(
