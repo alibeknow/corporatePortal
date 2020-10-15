@@ -28,6 +28,7 @@
     "test:check-coverage": "yarn test:coverage && istanbul check-coverage",
     "report-coverage": "coveralls < ./coverage/lcov.info",
     "migrate": "npx sequelize-cli db:migrate",
+    "seeds": "npx sequelize-cli db:seed:all",
     "apidoc": "apidoc -i server/routes -o apidoc/"
   },
   "keywords": [
