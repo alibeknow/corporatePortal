@@ -3,8 +3,8 @@ import DefaultModel from "../models/Default.model";
 module.exports = (sequelize, DataTypes) => {
   class GeoPoint extends DefaultModel {
     static associate(models) {
-      models.GeoPoint.hasMany(models.user);
-      models.GeoPoint.hasMany(models.city);
+      models.geoPoint.hasMany(models.user);
+      models.geoPoint.hasMany(models.city);
     }
   }
   GeoPoint.init(
@@ -27,5 +27,5 @@ module.exports = (sequelize, DataTypes) => {
       timestamps: true
     }
   );
-  return WorkPosition;
+  return GeoPoint;
 };
