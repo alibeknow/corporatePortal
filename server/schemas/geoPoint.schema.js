@@ -1,10 +1,10 @@
-import DefaultModel from "../models/Default.model";
+import DefaultModel from '../models/Default.model';
 
 module.exports = (sequelize, DataTypes) => {
   class GeoPoint extends DefaultModel {
     static associate(models) {
-      models.GeoPoint.hasMany(models.user);
-      models.GeoPoint.hasMany(models.city);
+      models.geoPoint.hasMany(models.user);
+      models.geoPoint.hasMany(models.city);
     }
   }
   GeoPoint.init(
@@ -12,20 +12,20 @@ module.exports = (sequelize, DataTypes) => {
       id: {
         primaryKey: true,
         type: DataTypes.UUID,
-        defaultValue: DataTypes.UUIDV4
+        defaultValue: DataTypes.UUIDV4,
       },
       name: {
-        type: DataTypes.STRING(255)
+        type: DataTypes.STRING(255),
       },
       coordinates: {
-        type: DataTypes.GEOMETRY("POINT")
-      }
+        type: DataTypes.GEOMETRY('POINT'),
+      },
     },
     {
       sequelize,
-      modelName: "geoPoint",
-      timestamps: true
-    }
+      modelName: 'geoPoint',
+      timestamps: true,
+    },
   );
-  return WorkPosition;
+  return GeoPoint;
 };

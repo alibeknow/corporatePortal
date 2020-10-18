@@ -1,7 +1,7 @@
 export default {
   env: process.env.NODE_ENV || 'development',
   port: process.env.PORT || 4000,
-  database: process.env.DATABASE_URL || 'postgres://postgres:developer@localhost:5432/corporate_portal',
+  database: process.env.DATABASE_URL || 'postgres://docker:docker@localhost:5432/corporate_portal',
   apiVersion: process.env.API_VERSION || '1.0',
   sessionSecret: process.env.SESSION_SECRET || 'nfqnefonewifwenofnweif',
   redis: process.env.REDIS_URL || 'redis://localhost:6379/0',
