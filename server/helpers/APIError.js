@@ -13,6 +13,7 @@ class ExtendableError extends Error {
     this.status = status;
     this.isPublic = isPublic;
     this.isOperational = true;
+    console.log(message);
     Error.captureStackTrace(this, this.constructor.name);
   }
 }

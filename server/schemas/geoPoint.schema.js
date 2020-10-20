@@ -3,8 +3,8 @@ import DefaultModel from '../models/Default.model';
 module.exports = (sequelize, DataTypes) => {
   class GeoPoint extends DefaultModel {
     static associate(models) {
-      models.geoPoint.hasMany(models.user);
-      models.geoPoint.hasMany(models.city);
+      models.geoPoint.belongsTo(models.user);
+      models.geoPoint.belongsTo(models.city);
     }
   }
   GeoPoint.init(
