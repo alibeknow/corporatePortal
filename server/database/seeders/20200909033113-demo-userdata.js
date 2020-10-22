@@ -10,21 +10,9 @@ const users = [...Array(10).keys()].map((index) => ({
   updated_at: new Date(),
 }));
 
-const personalDatas = [...Array(10).keys()].map((index) => ({
-  id: faker.random.uuid(),
-  user_id: users[index].id,
-  dateBirth: new Date(),
-  passport: faker.random.number(),
-  registration: faker.address.secondaryAddress(),
-  snils: faker.random.number(),
-  education: faker.random.word(),
-  created_at: new Date(),
-  updated_at: new Date(),
-}));
 module.exports = {
   up: async (queryInterface, Sequelize) => {
     await queryInterface.bulkInsert('users', users);
-    await queryInterface.bulkInsert('personal_data', personalDatas);
   },
 
   down: (queryInterface, Sequelize) => queryInterface.bulkDelete('Users', null),

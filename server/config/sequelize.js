@@ -41,7 +41,7 @@ Object.keys(db).forEach((modelName) => {
     db[modelName].associate(db);
   }
 });
-
+sequelize.sync();
 // assign the sequelize variables to the db object and returning the db.
 module.exports = {
   ...db,

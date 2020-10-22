@@ -9,7 +9,7 @@
     "yarn": ">=1.17.3"
   },
   "scripts": {
-    "start": "yarn migrate && gulp serve",
+    "start": "gulp serve",
     "start:dev": "yarn  && yarn start",
     "client:start": "webpack-dev-server --config ./webpack/webpack.config.dev.js --open --progress --color --watch",
     "start:commands": "node dist/server/commands",
@@ -68,7 +68,7 @@
     "compression": "1.7.4",
     "connect-redis": "5.0.0",
     "cookie-parser": "1.4.5",
-    "cors": "false2.8.5",
+    "cors": "2.8.5",
     "cron": "1.8.2",
     "debug": "^4.1.1",
     "del": "^5.1.0",
@@ -126,6 +126,7 @@
     "eslint-config-airbnb-base": "14.2.0",
     "eslint-plugin-import": "2.22.0",
     "eslint-watch": "7.0.0",
+    "faker": "^5.1.0",
     "gulp-apidoc": "^0.2.8",
     "gulp-babel": "8.0.0",
     "gulp-newer": "^1.4.0",

@@ -1,10 +1,15 @@
-import UserModel from "../models/GeoPoints.model";
+import GeoPoints from '../models/GeoPoints.model';
+import UserModel from '../models/User.model';
 
 export default class GeoPointService {
   static async savePoint(params) {
-    return await UserModel.upsert(params);
+    const result = await GeoPoints.upsert(params);
+    return result;
   }
+
   static async getPoint(id) {
-    return await UserModel.findOneByPk(id);
+    const result = await GeoPoints.findByPk(id);
+
+    return result;
   }
 }
