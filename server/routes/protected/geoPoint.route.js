@@ -8,12 +8,12 @@ const router = new Router();
 
 router.post(
   '/',
-  validate('savePoint', 'body'),
+
   handleAsyncError(GeoPointController.saveCoordinates),
 );
 router.get(
-  '/:id',
-  validate('getPoint', 'params'),
+  '/',
+
   handleAsyncError(GeoPointController.getPoints),
 );
 
