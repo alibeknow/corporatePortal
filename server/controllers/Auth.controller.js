@@ -11,7 +11,8 @@ export default class AuthController {
     const token = await AuthService.generateJWT(user);
     req.session.token = token;
     const refreshToken = await AuthService.generateRefreshToken(user.id);
-    res.json({ token, refreshToken });
+
+    res.json({ token, refreshToken, userId: user.id });
   }
 
   static async refresh(req, res) {
