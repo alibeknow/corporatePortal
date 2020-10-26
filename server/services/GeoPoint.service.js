@@ -16,9 +16,19 @@ export default class GeoPointService {
   }
 
   static async getPointsByCity(id) {
-    const result =await GeoPoints.findAll({
-      where: {cityId: id}
-    });
+
+let result;
+
+if(id == 'null') {
+  result =await GeoPoints.findAll();
+}else {
+  result =await GeoPoints.findAll({
+    where: {cityId: id}
+  });
+}
+
+
+
     return result
   }
 }
