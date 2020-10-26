@@ -17,4 +17,10 @@ router.get(
   handleAsyncError(GeoPointController.getPoints),
 );
 
+router.get(
+  '/:id',
+
+  handleAsyncError(GeoPointController.getPointsByCity),
+);
+
 export default router;

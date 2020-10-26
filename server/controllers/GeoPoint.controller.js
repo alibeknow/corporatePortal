@@ -23,4 +23,14 @@ export default class GeoPointController {
     const result = await GeoPointService.getPoint();
     res.json(result);
   }
+
+
+ static async getPointsByCity(req, res) {
+   console.log(req.params)
+
+   const result = await GeoPointService.getPointsByCity(req.params.id);
+   res.json(result)
+ }
+
+
 }
