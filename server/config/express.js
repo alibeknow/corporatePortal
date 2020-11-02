@@ -28,7 +28,10 @@ const app = express();
 app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(fileupload());
+app.use(fileupload({
+  useTempFiles : true,
+  tempFileDir : '/tmp/'
+}));
 app.use(cookieParser());
 app.use(compress());
 app.use(methodOverride());
