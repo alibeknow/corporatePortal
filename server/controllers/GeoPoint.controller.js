@@ -32,5 +32,14 @@ export default class GeoPointController {
    res.json(result)
  }
 
-
+static async uploadFile(req, res) {
+  if(!req.files) {
+    res.send('File not found')
+  }else {
+    res.json({
+      
+      message: 'File uploaded succesfull'
+    })
+  }
+}
 }

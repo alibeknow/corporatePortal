@@ -8,7 +8,7 @@ import expressWinston from 'express-winston';
 import session from 'express-session';
 import connectRedis from 'connect-redis';
 import cors from 'cors';
-
+import fileupload from 'express-fileupload'
 import routes from '../routes';
 import APIError from '../helpers/APIError';
 import RedisService from '../services/Redis.service';
@@ -28,7 +28,7 @@ const app = express();
 app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-
+app.use(fileupload());
 app.use(cookieParser());
 app.use(compress());
 app.use(methodOverride());
