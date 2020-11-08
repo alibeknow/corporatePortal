@@ -1,4 +1,4 @@
-import DefaultModel from "../models/Default.model";
+import DefaultModel from '../models/Default.model';
 
 module.exports = (sequelize, DataTypes) => {
   class DepartmentStructure extends DefaultModel {
@@ -12,17 +12,17 @@ module.exports = (sequelize, DataTypes) => {
       id: {
         primaryKey: true,
         type: DataTypes.UUID,
-        defaultValue: DataTypes.UUIDV4
+        defaultValue: DataTypes.UUIDV4,
       },
       name: {
-        type: DataTypes.STRING
-      }
+        type: DataTypes.STRING,
+      },
     },
     {
       sequelize,
-      modelName: "departmentStructure",
-      timestamps: true
-    }
+      modelName: 'departmentStructure',
+      timestamps: true,
+    },
   );
   return DepartmentStructure;
 };

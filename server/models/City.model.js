@@ -1,3 +1,3 @@
-import db from "../config/sequelize";
+import db from '../config/sequelize';
 
 export default class CityModel extends db.city {}

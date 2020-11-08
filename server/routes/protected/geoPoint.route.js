@@ -24,7 +24,6 @@ router.get(
 );
 
 router.post('/upload',
-handleAsyncError(GeoPointController.uploadFile),
-)
+  handleAsyncError(GeoPointController.uploadFile));
 
 export default router;

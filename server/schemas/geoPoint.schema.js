@@ -19,6 +19,10 @@ module.exports = (sequelize, DataTypes) => {
       },
       coordinates: {
         type: DataTypes.GEOMETRY('POINT'),
+        unique: true,
+      },
+      description: {
+        type: DataTypes.TEXT,
       },
     },
     {
