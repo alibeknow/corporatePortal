@@ -13,7 +13,7 @@ import UserModel from '../models/User.model';
 import { sequelize } from '../config/sequelize';
 
 const xmlReader = require('read-xml');
-const convert = require('xml-js');
+
 import { DOMParser } from 'xmldom'
 import tj from 'togeojson'
 import { html2json } from 'html2json'

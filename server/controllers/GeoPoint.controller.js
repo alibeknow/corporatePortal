@@ -1,16 +1,12 @@
 import path from 'path';
 import fs from 'fs';
 
-import parseKMZ from 'parse-kmz';
+
 
 import GeoPointService from '../services/GeoPoint.service';
 import { getPagination } from '../helpers/pagination';
 
-const xmlReader = require('read-xml');
-const convert = require('xml-js');
-const { DOMParser } = require('xmldom');
-const tj = require('togeojson');
-const { html2json } = require('html2json');
+
 
 export default class GeoPointController {
   static async saveCoordinates(req, res) {

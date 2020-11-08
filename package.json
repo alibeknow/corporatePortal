@@ -8,9 +8,6 @@
     "npm": ">=6.4.1",
     "yarn": ">=1.17.3"
   },
-  "resolutions": {
-    "graceful-fs": "^4.2.4"
-  },
   "scripts": {
     "start": "gulp serve",
     "start:dev": "yarn  && yarn start",
@@ -84,7 +81,7 @@
     "express-session": "1.17.1",
     "express-winston": "4.0.5",
     "faker": "^5.1.0",
-    "gulp": "false4.0.2",
+    "gulp": "^4.0.2",
     "gulp-load-plugins": "^2.0.4",
     "helmet": "4.1.0",
     "html-to-json": "^0.6.0",
