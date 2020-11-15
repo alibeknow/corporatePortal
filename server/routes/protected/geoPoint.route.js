@@ -23,6 +23,11 @@ router.get(
   handleAsyncError(GeoPointController.getPointsByCity),
 );
 
+router.post(
+  '/image',
+  handleAsyncError(GeoPointController.getImage)
+)
+
 router.post('/upload',
   handleAsyncError(GeoPointController.uploadFile));
 

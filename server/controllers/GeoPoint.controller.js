@@ -44,4 +44,16 @@ export default class GeoPointController {
 
     res.json(result);
   }
+
+  static async getImage(req, res) {
+    const { id, link } = req.body;
+
+    console.log('before upload', req.body)
+    const result = await GeoPointService.getImage({ id, link });
+    console.log('This result message');
+
+    res.json(result);
+  }
+
+
 }

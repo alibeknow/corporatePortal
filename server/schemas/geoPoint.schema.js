@@ -5,6 +5,7 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       models.geoPoint.belongsTo(models.user);
       models.geoPoint.belongsTo(models.city);
+      models.geoPoint.hasMany(models.uploads, {foreign_key: 'pointId'});
     }
   }
   GeoPoint.init(
@@ -22,8 +23,11 @@ module.exports = (sequelize, DataTypes) => {
         unique: true,
       },
       description: {
-        type: DataTypes.TEXT,
+        type: DataTypes.JSONB,
       },
+      google_link: {
+        type: DataTypes.TEXT
+      }
     },
     {
       sequelize,
