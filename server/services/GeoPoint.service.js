@@ -59,7 +59,7 @@ console.log(id)
               downloaded: false,
               files: results[0][0].files}
           }
-         console.log('---',results)
+       
          if(link) {
           const filename = await  download(link, `${uuidv4()}`)
           console.log(filename)
