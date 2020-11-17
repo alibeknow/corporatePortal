@@ -56,4 +56,18 @@ export default class GeoPointController {
   }
 
 
+
+  static async saveImage(req, res) {
+    console.log(req)
+    const { pointId } = req.body;
+    const {file} = req.files
+
+    console.log('before upload', req.body)
+    const result = await GeoPointService.saveImage({ pointId, file });
+    console.log('This result message');
+
+    res.json(result);
+  }
+
+
 }

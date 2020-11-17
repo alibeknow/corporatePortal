@@ -34,14 +34,14 @@ export default class GeoPointService {
     return result;
   }
 
-  static async getPoint(id) {
-    const result = await GeoPoints.findAll({
-      include: [{model: Uploads}],
+  // static async getPoint(id) {
+  //   const result = await GeoPoints.findAll({
+  //     include: [{model: Uploads}],
 
-    });
+  //   });
 
-    return result;
-  }
+  //   return result;
+  // }
 
   static async getImage({id, link}) {
 
@@ -56,6 +56,7 @@ console.log(id)
           if(results[0].length > 0)  {
             console.log('already exists')
             return {
+              pointId: id,
               downloaded: false,
               files: results[0][0].files}
           }
@@ -77,6 +78,7 @@ console.log(id)
   const result = await  sequelize.query(`select geo_point_id, array_agg(image) as files from uploads where geo_point_id = '${id}' group by geo_point_id`)
   console.log(result[0])
     return {
+      pointId: id,
       downloaded: true,
       files: result[0].length > 0 ? result[0][0].files : result[0]}
   }
@@ -99,6 +101,35 @@ console.log(db.uploads)
     }
 
     return result;
+  }
+
+  static async saveImage({pointId, file}) {
+
+    const  moveFileAsync = util.promisify(file.mv)
+
+    try {
+
+      const fileExt = file.mimetype.split('/')[1]
+      console.log('afte async filemove', file.mimetype.split('/')[1])
+console.log(fileExt)
+      if(fileExt !== 'png' && fileExt !== 'img') {
+        return {message: 'Неправильное расширение файла'}
+      }
+      const filename = `${uuidv4()}.${fileExt}`
+      await  moveFileAsync(`${process.cwd()}/uploads/${filename}`)
+
+
+
+   const res =   await Uploads.upsert({
+        geoPointId: pointId,
+        image: filename
+      })
+      console.log(res)
+      return {message: 'work!'}
+    }catch(e) {
+
+    }
+
   }
 
   static async uploadFile({ files, userId, cityId }) {
@@ -199,16 +230,6 @@ console.log('read kml')
                 google_link: feature.properties.gx_media_links
               });
 
-console.log('******', result[0].id)
-
-
-
-
-
-              // console.log('******', result);
-              // console.log(i);
-              // if (i > 4) break;
-
 
 
           }
@@ -224,21 +245,6 @@ console.log('******', result[0].id)
 
     }
 
-
-
-
-
-      // convertedWithStyles.features[0].properties.descriptionFormDom = []
-      // html2json(convertedWithStyles.features[0].properties.description).forEach(item=> {
-      //   if(item.node == 'text') {
-
-      //   }
-      // })
-      // console.log(html2json(convertedWithStyles.features[0].properties.description))
-
-      // res.json({
-      //   convertedWithStyles
-      // })
     }
 
 
