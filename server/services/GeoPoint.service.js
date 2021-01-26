@@ -214,8 +214,8 @@ export default class GeoPointService {
     const {lat1, lng1, lat2, lng2} = params
     const url = 'http://localhost:8989' + '/route?' + 'point=' + lat1 + ',' + lng1 + '&point=' + lat2 + ',' + lng2 + '&type=json&locale=ru-RU&key=&elevation=false&profile=car&points_encoded=false'
 
- const data = await fetch(url)
- const result = await data.json()
+    const data = await fetch(url)
+    const result = await data.json()
     return result;
   }
 }
