@@ -6,7 +6,7 @@ import request from 'request'
 import download from '../utils/downloadFile'
 import unzipper from 'unzipper';
 import { v4 as uuidv4 } from 'uuid';
-
+import fetch from 'node-fetch';
 
 import GeoPoints from '../models/GeoPoints.model';
 import Uploads from '../models/Uploads.model'
@@ -29,7 +29,7 @@ const downloadAsync = util.promisify(download)
 
 export default class GeoPointService {
   static async savePoint(params) {
-    console.log(params);
+ 
     const result = await GeoPoints.upsert(params);
     return result;
   }
@@ -49,12 +49,12 @@ export default class GeoPointService {
     if (!fs.existsSync(`${process.cwd()}/uploads`)) {
       fs.mkdirSync(`${process.cwd()}/uploads/`);
     }
-console.log(id)
+
          const results = await sequelize.query(`select geo_point_id, array_agg(image) as files from uploads where geo_point_id = '${id}' group by geo_point_id`);
-         console.log(results[0])
+     
 
           if(results[0].length > 0)  {
-            console.log('already exists')
+         
             return {
               downloaded: false,
               files: results[0][0].files}
@@ -62,7 +62,7 @@ console.log(id)
        
          if(link) {
           const filename = await  download(link, `${uuidv4()}`)
-          console.log(filename)
+       
 
 
 
@@ -75,7 +75,7 @@ console.log(id)
 
 
   const result = await  sequelize.query(`select geo_point_id, array_agg(image) as files from uploads where geo_point_id = '${id}' group by geo_point_id`)
-  console.log(result[0])
+
     return {
       downloaded: true,
       files: result[0].length > 0 ? result[0][0].files : result[0]}
@@ -83,7 +83,7 @@ console.log(id)
 
   static async getPointsByCity(id) {
     let result;
-console.log(db.uploads)
+
     if (id == 'null') {
       result = await GeoPoints.findAll({
         include: [{model: db.uploads}]
@@ -102,14 +102,14 @@ console.log(db.uploads)
   }
 
   static async uploadFile({ files, userId, cityId }) {
-    console.log(userId, cityId);
+    
     if (!files) {
     // res.send('File not found')
       throw new Error('Файл не найден');
     } else {
       const { file } = files;
 
-      console.log(file);
+   
 
 
       if (!/\.(kml|kmz)$/i.test(file.name)) {
@@ -123,11 +123,9 @@ console.log(db.uploads)
     try {
       await  moveFileAsync(`${process.cwd()}/tempUpload/temp.kmz`)
 
-    // fs.createReadStream(`${process.cwd()}/tempUpload/temp.kmz`)
-    //         .pipe(unzipper.Extract({ path: `${process.cwd()}/tempUpload/` }));
-console.log('before file unzip')
+ 
     await readFileAsyncUtil(`${process.cwd()}/tempUpload/temp.kmz`, `${process.cwd()}/tempUpload/`)
-console.log('after file unzip', fs.existsSync(`${process.cwd()}/tempUpload/doc.kml`))
+
           if (fs.existsSync(`${process.cwd()}/tempUpload/temp.kmz`)) {
             fs.unlink(`${process.cwd()}/tempUpload/temp.kmz`, (err) => {
               if (err) throw err;
@@ -136,12 +134,11 @@ console.log('after file unzip', fs.existsSync(`${process.cwd()}/tempUpload/doc.k
 
 
 
-console.log('read kml')
     const kmlString = await readFileAsync(`${process.cwd()}/tempUpload/doc.kml`, 'utf8');
           const kml = new DOMParser().parseFromString(kmlString);
-          // var converted = tj.kml(kml);
+     
           const convertedWithStyles = tj.kml(kml, { styles: true });
-         // console.log(convertedWithStyles);
+    
 
 
 
@@ -155,9 +152,7 @@ console.log('read kml')
 
 
     let i = 0;
-          console.log(cityId, userId);
-          // console.log(convertedWithStyles.features.length)
-           //return convertedWithStyles
+         
 
                 for (const feature of convertedWithStyles.features) {
             i++;
@@ -167,11 +162,11 @@ console.log('read kml')
             let parsedResult
             if(feature.geometry.type !== 'Point') continue
             const coordinateString = `SRID=4326;POINT (${feature.geometry.coordinates[0]} ${feature.geometry.coordinates[1]})`
-            //     // console.log(coordinateString)
+      
                const results = await sequelize.query(` select exists
                (select true from geo_points gp where
                 coordinates = '${coordinateString}');`);
-                console.log(results[0][0].exists)
+             
               if(results[0][0].exists) continue
             if(!feature.properties.description) {
               parsedResult = null
@@ -188,7 +183,7 @@ console.log('read kml')
               parsedResult = feature.properties.description
             }
 
-                  console.log(parsedResult)
+              
 
               const result = await GeoPoints.upsert({
                 coordinates: `${JSON.stringify({ type: 'Point', coordinates: [feature.geometry.coordinates[0], feature.geometry.coordinates[1]] })}`,
@@ -199,22 +194,8 @@ console.log('read kml')
                 google_link: feature.properties.gx_media_links
               });
 
-console.log('******', result[0].id)
-
-
-
-
-
-              // console.log('******', result);
-              // console.log(i);
-              // if (i > 4) break;
-
-
-
           }
 
-
-          console.log('files uploaded')
           return {message: 'Файлы загружены'};
 
 
@@ -224,23 +205,17 @@ console.log('******', result[0].id)
 
     }
 
-
-
-
-
-      // convertedWithStyles.features[0].properties.descriptionFormDom = []
-      // html2json(convertedWithStyles.features[0].properties.description).forEach(item=> {
-      //   if(item.node == 'text') {
-
-      //   }
-      // })
-      // console.log(html2json(convertedWithStyles.features[0].properties.description))
-
-      // res.json({
-      //   convertedWithStyles
-      // })
     }
 
 
+  }
+  static async roadRoute(params) {
+ 
+    const {lat1, lng1, lat2, lng2} = params
+    const url = 'http://localhost:8989' + '/route?' + 'point=' + lat1 + ',' + lng1 + '&point=' + lat2 + ',' + lng2 + '&type=json&locale=ru-RU&key=&elevation=false&profile=car&points_encoded=false'
+
+ const data = await fetch(url)
+ const result = await data.json()
+    return result;
   }
 }

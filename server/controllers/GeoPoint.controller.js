@@ -55,5 +55,16 @@ export default class GeoPointController {
     res.json(result);
   }
 
+  static async roadRoute(req, res) {
+    console.log(req.body)
+ 
+   
+
+    const result = await GeoPointService.roadRoute(req.body);
+    res.json({
+      result
+    })
+  }
+
 
 }
