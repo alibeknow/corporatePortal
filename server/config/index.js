@@ -1,5 +1,7 @@
+import _ from './env'
+console.log(process.env)
 export default {
-  env: process.env.NODE_ENV || 'development',
+  env: process.env.NODE_ENV || 'development!!',
   port: process.env.PORT || 4000,
   database: process.env.DATABASE_URL || 'postgres://docker:docker@localhost:25432/corporate_portal',
   apiVersion: process.env.API_VERSION || '1.0',

@@ -28,6 +28,11 @@ router.post(
   handleAsyncError(GeoPointController.getImage)
 )
 
+router.post(
+  '/saveImage',
+  handleAsyncError(GeoPointController.saveImage)
+)
+
 router.post('/upload',
   handleAsyncError(GeoPointController.uploadFile));
 
