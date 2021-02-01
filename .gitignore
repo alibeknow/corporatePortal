@@ -58,5 +58,5 @@ build/yarn
 # ignore package.lock.json
 package-lock.json
 docker-compose.override.yml
-/uploads
-/tempUpload
+uploads
+tempUpload

@@ -45,14 +45,14 @@ export default class GeoPointService {
 
   static async getImage({id, link}) {
 
-
+console.log('get image service **********', link)
     if (!fs.existsSync(path.join(process.cwd(), 'uploads'))) {
       fs.mkdirSync(path.join(process.cwd(), 'uploads'));
     }
 
          const results = await sequelize.query(`select geo_point_id, array_agg(image) as files from uploads where geo_point_id = '${id}' group by geo_point_id`);
      
-
+    console.log(results[0])
           if(results[0].length > 0)  {
          
             return {
@@ -116,7 +116,7 @@ console.log(fileExt)
         return {message: 'Неправильное расширение файла'}
       }
       const filename = `${uuidv4()}.${fileExt}`
-      await  moveFileAsync(path.join(process.cwd(), 'uploads'), filename)
+      await  moveFileAsync(path.join(process.cwd(), 'uploads', filename))
 
 
 
@@ -146,19 +146,19 @@ console.log(fileExt)
       if (!/\.(kml|kmz)$/i.test(file.name)) {
         throw new Error('Неправильный тип файла');
       }
-      if (!fs.existsSync(path.join(process.cwd(), 'tempUpload'))) {
-        fs.mkdirSync(path.join(process.cwd(), 'tempUpload'));
+      if (!fs.existsSync(`${process.cwd()}/tempUpload`)) {
+        fs.mkdirSync(`${process.cwd()}/tempUpload/`);
       }
 
     const  moveFileAsync = util.promisify(file.mv)
     try {
-      await  moveFileAsync(path.join(process.cwd(), 'tempUpload', 'temp.kmz'))
+      await  moveFileAsync(`${process.cwd()}/tempUpload/temp.kmz`)
 
  
-    await readFileAsyncUtil(path.join(process.cwd(), 'tempUpload', 'temp.kmz'), path.join(process.cwd(), 'tempUpload'))
+    await readFileAsyncUtil(`${process.cwd()}/tempUpload/temp.kmz`, `${process.cwd()}/tempUpload/`)
 
-          if (fs.existsSync(path.join(process.cwd(), 'tempUpload', 'temp.kmz'))) {
-            fs.unlink(path.join(process.cwd(), 'tempUpload', 'temp.kmz'), (err) => {
+          if (fs.existsSync(`${process.cwd()}/tempUpload/temp.kmz`)) {
+            fs.unlink(`${process.cwd()}/tempUpload/temp.kmz`, (err) => {
               if (err) throw err;
             });
           }
