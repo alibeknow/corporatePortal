@@ -2,6 +2,7 @@ const fs = require("fs");
 const path = require("path");
 const ejs = require("ejs");
 const pdf = require("html-pdf");
+var conversion = require("phantom-html-to-pdf")();
 const {signPdf} = require("../utils/signPDF")
 
 export default class DocumentService {
@@ -17,8 +18,8 @@ console.log(path.join(process.cwd(), 'views', 'report-template.ejs'))
           return new Error()
     } else {
         let options = {
-            "height": "11.25in",
-            "width": "8.5in",
+            "height": "297mm",
+            "width": "210mm",
             "header": {
                 "height": "20mm"
             },
@@ -38,6 +39,8 @@ console.log(path.join(process.cwd(), 'views', 'report-template.ejs'))
                return new Error()
             } else {
               console.log('***********',data)
+              var fs = require('fs')
+
           const response =  await  signPdf(data) 
           console.log(response)
             //           var file = fs.createReadStream(path.join(process.cwd(), 'documentTemplates', 'report.pdf'));
