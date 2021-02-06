@@ -22,6 +22,7 @@ import { html2json } from 'html2json'
 import { Model } from 'sequelize';
 import { REPL_MODE_SLOPPY } from 'repl';
 import UploadsModel from '../models/Uploads.model';
+import { link } from '@hapi/joi';
 
 
 const readFileAsync = util.promisify(fs.readFile);
@@ -52,7 +53,7 @@ console.log('get image service **********', link)
 
          const results = await sequelize.query(`select geo_point_id, array_agg(image) as files from uploads where geo_point_id = '${id}' group by geo_point_id`);
      
-    console.log(results[0])
+    console.log('8888888888888', results[0])
           if(results[0].length > 0)  {
          
             return {
@@ -61,26 +62,26 @@ console.log('get image service **********', link)
               files: results[0][0].files}
           }
        
-         if(link) {
-          const filename = await  download(link, `${uuidv4()}`)
+    //      if(link) {
+    //       const filename = await  download(link, `${uuidv4()}`)
        
 
 
 
-    await Uploads.upsert({
-      geoPointId: id,
-      image: filename
-    })
-         }
+    // await Uploads.upsert({
+    //   geoPointId: id,
+    //   image: filename
+    // })
+    //      }
 
 
 
-  const result = await  sequelize.query(`select geo_point_id, array_agg(image) as files from uploads where geo_point_id = '${id}' group by geo_point_id`)
+  // const result = await  sequelize.query(`select geo_point_id, array_agg(image) as files from uploads where geo_point_id = '${id}' group by geo_point_id`)
 
-    return {
-      pointId: id,
-      downloaded: true,
-      files: result[0].length > 0 ? result[0][0].files : result[0]}
+  //   return {
+  //     pointId: id,
+  //     downloaded: true,
+  //     files: result[0].length > 0 ? result[0][0].files : result[0]}
   }
 
   static async getPointsByCity(id) {
@@ -179,17 +180,10 @@ console.log(fileExt)
           });
         }
 
-
-
-
-    let i = 0;
-         
-
+        if (!fs.existsSync(path.join(process.cwd(), 'uploads'))) {
+          fs.mkdirSync(path.join(process.cwd(), 'uploads'));
+        }
                 for (const feature of convertedWithStyles.features) {
-            i++;
-
-
-
             let parsedResult
             if(feature.geometry.type !== 'Point') continue
             const coordinateString = `SRID=4326;POINT (${feature.geometry.coordinates[0]} ${feature.geometry.coordinates[1]})`
@@ -214,7 +208,8 @@ console.log(fileExt)
               parsedResult = feature.properties.description
             }
 
-              
+            
+           
 
               const result = await GeoPoints.upsert({
                 coordinates: `${JSON.stringify({ type: 'Point', coordinates: [feature.geometry.coordinates[0], feature.geometry.coordinates[1]] })}`,
@@ -224,6 +219,17 @@ console.log(fileExt)
                 name: feature.properties.name,
                 google_link: feature.properties.gx_media_links
               });
+              console.log('****', result[0].dataValues.id)
+
+              if(feature.properties.gx_media_links) {
+                const filename = await  download(feature.properties.gx_media_links, `${uuidv4()}`)
+                console.log('--------', filename)
+                if(!filename) continue
+              await Uploads.upsert({
+                geoPointId: result[0].dataValues.id,
+                image: filename
+              })
+               }
 
           }
 
