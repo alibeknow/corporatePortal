@@ -1,7 +1,8 @@
 const fs = require("fs");
 const path = require("path");
-let ejs = require("ejs");
-let pdf = require("html-pdf");
+const ejs = require("ejs");
+const pdf = require("html-pdf");
+const {signPdf} = require("../utils/signPDF")
 
 export default class DocumentService {
   static async PdfGenerate(data, res) {
@@ -31,13 +32,14 @@ console.log(path.join(process.cwd(), 'views', 'report-template.ejs'))
         //     if (err) throw err;
         //   });
         // }
-        pdf.create(data, options).toFile(path.join(process.cwd(), 'documentTemplates', 'report.pdf'), function (err, data) {
+        pdf.create(data, options).toFile(path.join(process.cwd(), 'documentTemplates', 'report.pdf'), async function (err, data) {
             if (err) {
               console.log(err)
                return new Error()
             } else {
               console.log('***********',data)
-                
+          const response =  await  signPdf(data) 
+          console.log(response)
             //           var file = fs.createReadStream(path.join(process.cwd(), 'documentTemplates', 'report.pdf'));
             // var stat = fs.statSync(path.join(process.cwd(), 'documentTemplates', 'report.pdf'));
             // res.setHeader('Content-Length', stat.size);

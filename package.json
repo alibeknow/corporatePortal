@@ -82,6 +82,7 @@
     "express-session": "1.17.1",
     "express-winston": "4.0.5",
     "faker": "^5.1.0",
+    "form-data": "^3.0.0",
     "gulp": "^4.0.2",
     "gulp-load-plugins": "^2.0.4",
     "helmet": "4.1.0",

@@ -13,7 +13,7 @@ router.post(
 );
 
 router.get('/', (req, res)=> {
-    res.download(path.join(process.cwd(), 'documentTemplates', 'report.pdf'))
+    res.download(path.join(process.cwd(), 'documentTemplates', 'report-sign.pdf'))
 })
 
 
