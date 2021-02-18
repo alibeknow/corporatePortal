@@ -38,8 +38,6 @@ console.log(path.join(process.cwd(), 'views', 'report-template.ejs'))
               console.log(err)
                return new Error()
             } else {
-              console.log('***********',data)
-              var fs = require('fs')
 
           const response =  await  signPdf(data) 
           console.log(response)
