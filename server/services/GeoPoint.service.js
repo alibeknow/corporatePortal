@@ -35,25 +35,11 @@ export default class GeoPointService {
     return result;
   }
 
-  // static async getPoint(id) {
-  //   const result = await GeoPoints.findAll({
-  //     include: [{model: Uploads}],
-
-  //   });
-
-  //   return result;
-  // }
-
   static async getImage({id, link}) {
-
-console.log('get image service **********', link)
     if (!fs.existsSync(path.join(process.cwd(), 'uploads'))) {
       fs.mkdirSync(path.join(process.cwd(), 'uploads'));
     }
-
          const results = await sequelize.query(`select geo_point_id, array_agg(image) as files from uploads where geo_point_id = '${id}' group by geo_point_id`);
-     
-    console.log('8888888888888', results[0])
           if(results[0].length > 0)  {
          
             return {
@@ -61,27 +47,6 @@ console.log('get image service **********', link)
               downloaded: false,
               files: results[0][0].files}
           }
-       
-    //      if(link) {
-    //       const filename = await  download(link, `${uuidv4()}`)
-       
-
-
-
-    // await Uploads.upsert({
-    //   geoPointId: id,
-    //   image: filename
-    // })
-    //      }
-
-
-
-  // const result = await  sequelize.query(`select geo_point_id, array_agg(image) as files from uploads where geo_point_id = '${id}' group by geo_point_id`)
-
-  //   return {
-  //     pointId: id,
-  //     downloaded: true,
-  //     files: result[0].length > 0 ? result[0][0].files : result[0]}
   }
 
   static async getPointsByCity(id) {
@@ -91,9 +56,6 @@ console.log('get image service **********', link)
       result = await GeoPoints.findAll({
         include: [{model: db.uploads}]
       });
-
-      // result = await sequelize.query(`select * from geo_points gp join uploads up on
-      // gp.id = up.geo_point_id`)
 
     } else {
       result = await GeoPoints.findAll({
@@ -118,10 +80,7 @@ console.log(fileExt)
       }
       const filename = `${uuidv4()}.${fileExt}`
       await  moveFileAsync(path.join(process.cwd(), 'uploads', filename))
-
-
-
-   const res =   await Uploads.upsert({
+        const res =   await Uploads.upsert({
         geoPointId: pointId,
         image: filename
       })
@@ -139,14 +98,12 @@ console.log(fileExt)
     // res.send('File not found')
       throw new Error('Файл не найден');
     } else {
+      const fileId = uuidv4()
       const { file } = files;
-
-   
-
-
       if (!/\.(kml|kmz)$/i.test(file.name)) {
         throw new Error('Неправильный тип файла');
       }
+      console.log('****', file.name)
       if (!fs.existsSync(`${process.cwd()}/tempUpload`)) {
         fs.mkdirSync(`${process.cwd()}/tempUpload/`);
       }
@@ -154,36 +111,25 @@ console.log(fileExt)
     const  moveFileAsync = util.promisify(file.mv)
     try {
       await  moveFileAsync(`${process.cwd()}/tempUpload/temp.kmz`)
+      await readFileAsyncUtil(`${process.cwd()}/tempUpload/temp.kmz`, `${process.cwd()}/tempUpload/`)
 
- 
-    await readFileAsyncUtil(`${process.cwd()}/tempUpload/temp.kmz`, `${process.cwd()}/tempUpload/`)
-
-          if (fs.existsSync(`${process.cwd()}/tempUpload/temp.kmz`)) {
+        if (fs.existsSync(`${process.cwd()}/tempUpload/temp.kmz`)) {
             fs.unlink(`${process.cwd()}/tempUpload/temp.kmz`, (err) => {
               if (err) throw err;
             });
           }
-
-
-
-    const kmlString = await readFileAsync(`${process.cwd()}/tempUpload/doc.kml`, 'utf8');
+          const kmlString = await readFileAsync(`${process.cwd()}/tempUpload/doc.kml`, 'utf8');
           const kml = new DOMParser().parseFromString(kmlString);
-     
           const convertedWithStyles = tj.kml(kml, { styles: true });
-    
-
-
-
          if (fs.existsSync(`${process.cwd()}/tempUpload/doc.kml`)) {
           fs.unlink(`${process.cwd()}/tempUpload/doc.kml`, (err) => {
             if (err) throw err;
           });
         }
-
         if (!fs.existsSync(path.join(process.cwd(), 'uploads'))) {
           fs.mkdirSync(path.join(process.cwd(), 'uploads'));
         }
-                for (const feature of convertedWithStyles.features) {
+        for (const feature of convertedWithStyles.features) {
             let parsedResult
             if(feature.geometry.type !== 'Point') continue
             const coordinateString = `SRID=4326;POINT (${feature.geometry.coordinates[0]} ${feature.geometry.coordinates[1]})`
@@ -217,15 +163,17 @@ console.log(fileExt)
                 cityId,
                 description: parsedResult,
                 name: feature.properties.name,
-                google_link: feature.properties.gx_media_links
+                google_link: feature.properties.gx_media_links,
+                file_id: fileId,
+                file_name: file.name
               });
-              console.log('****', result[0].dataValues.id)
+  
 
               if(feature.properties.gx_media_links) {
                 const filename = await  download(feature.properties.gx_media_links, `${uuidv4()}`)
                 console.log('--------', filename)
                 if(!filename) continue
-              await Uploads.upsert({
+                await Uploads.upsert({
                 geoPointId: result[0].dataValues.id,
                 image: filename
               })
@@ -255,4 +203,10 @@ console.log(fileExt)
     const result = await data.json()
     return result;
   }
+
+ static async getGeoPointFilter() {
+  const results = await sequelize.query(`select distinct file_id, file_name from geo_points;`);
+  console.log(results[0])
+  return results[0]
+ }
 }

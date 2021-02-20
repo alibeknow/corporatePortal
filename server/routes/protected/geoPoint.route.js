@@ -39,4 +39,9 @@ router.post('/upload',
 router.post('/roadRoute', 
 handleAsyncError(GeoPointController.roadRoute));
 
+router.post(
+  '/filterList',
+  handleAsyncError(GeoPointController.getGeoPointFilter),
+);
+
 export default router;

@@ -29,7 +29,6 @@ export default class GeoPointController {
   }
 
   static async getPointsByCity(req, res) {
-    console.log(req.params);
 
     const result = await GeoPointService.getPointsByCity(req.params.id);
     res.json(result);
@@ -72,13 +71,16 @@ export default class GeoPointController {
     console.log(req)
     const { pointId } = req.body;
     const {file} = req.files
-
-    console.log('before upload', req.body)
     const result = await GeoPointService.saveImage({ pointId, file });
-    console.log('This result message');
+  
 
     res.json(result);
   }
+
+ static async getGeoPointFilter(req, res) {
+  const result = await GeoPointService.getGeoPointFilter();
+  res.json(result)
+ }
 
 
 }

@@ -26,8 +26,14 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.JSONB,
       },
       google_link: {
-        type: DataTypes.TEXT
-      }
+        type: DataTypes.TEXT,
+      },
+      file_id:  {
+        type: DataTypes.UUID,
+      },
+      file_name: {
+        type: DataTypes.TEXT,
+      },
     },
     {
       sequelize,
