@@ -14,14 +14,14 @@ router.post(
 router.get(
   '/',
 
-  handleAsyncError(GeoPointController.getPoints),
+   handleAsyncError(GeoPointController.getPointsByCity),
 );
 
-router.get(
-  '/:id',
+// router.get(
+//   '/:id',
 
-  handleAsyncError(GeoPointController.getPointsByCity),
-);
+//   handleAsyncError(GeoPointController.getPointsByCity),
+// );
 
 router.post(
   '/image',
@@ -39,7 +39,7 @@ router.post('/upload',
 router.post('/roadRoute', 
 handleAsyncError(GeoPointController.roadRoute));
 
-router.post(
+router.get(
   '/filterList',
   handleAsyncError(GeoPointController.getGeoPointFilter),
 );

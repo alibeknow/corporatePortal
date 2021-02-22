@@ -30,7 +30,7 @@ export default class GeoPointController {
 
   static async getPointsByCity(req, res) {
 
-    const result = await GeoPointService.getPointsByCity(req.params.id);
+    const result = await GeoPointService.getPointsByCity(req.query);
     res.json(result);
   }
 

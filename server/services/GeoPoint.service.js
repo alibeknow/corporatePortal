@@ -2,6 +2,7 @@ import path from 'path';
 import fs, { createWriteStream } from 'fs';
 import util from 'util';
 import request from 'request'
+const { Op } = require("sequelize");
 
 import download from '../utils/downloadFile'
 import unzipper from 'unzipper';
@@ -49,18 +50,65 @@ export default class GeoPointService {
           }
   }
 
-  static async getPointsByCity(id) {
+  static async getPointsByCity(params) {
     let result;
 
-    if (id == 'null') {
+  
+    if(!params.filter) {
       result = await GeoPoints.findAll({
         include: [{model: db.uploads}]
       });
+    }else {
+       const filter = JSON.parse(params.filter)
+      console.log(filter)
+      const withoutNull = filter.filter(item=> item !== null)
+      const filterHaveNull = filter.some(item=> item === null)
+       if(filterHaveNull && filter.length == 1) {
 
-    } else {
-      result = await GeoPoints.findAll({
-        where: { cityId: id },
-      });
+        console.log('filter contains null')
+       
+        
+        result = await GeoPoints.findAll({
+          include: [{model: db.uploads}],
+          where: {
+            file_id: {
+              
+                //[Op.notIn]: filter,
+                [Op.not]: null,
+             
+              
+          }
+          }
+        });
+        
+       }else if(filterHaveNull && filter.length == 1) {
+        result = await GeoPoints.findAll({
+          include: [{model: db.uploads}],
+          where: {
+            file_id: {
+              [Op.or]: {
+                [Op.notIn]: withoutNull,
+                [Op.not]: null,
+              } 
+            } 
+          }
+        });
+       }
+       else {
+        result = await GeoPoints.findAll({
+          include: [{model: db.uploads}],
+          where: {
+            file_id: {
+              [Op.or]: {
+                [Op.notIn]: withoutNull,
+                [Op.is]: null,
+              } 
+            } 
+          }
+        });
+       }
+       
+       
     }
 
     return result;
@@ -73,8 +121,6 @@ export default class GeoPointService {
     try {
 
       const fileExt = file.mimetype.split('/')[1]
-      console.log('afte async filemove', file.mimetype.split('/')[1])
-console.log(fileExt)
       if(fileExt !== 'png' && fileExt !== 'img') {
         return {message: 'Неправильное расширение файла'}
       }
@@ -84,7 +130,6 @@ console.log(fileExt)
         geoPointId: pointId,
         image: filename
       })
-      console.log(res)
       return {message: 'work!'}
     }catch(e) {
 
@@ -103,7 +148,7 @@ console.log(fileExt)
       if (!/\.(kml|kmz)$/i.test(file.name)) {
         throw new Error('Неправильный тип файла');
       }
-      console.log('****', file.name)
+
       if (!fs.existsSync(`${process.cwd()}/tempUpload`)) {
         fs.mkdirSync(`${process.cwd()}/tempUpload/`);
       }
@@ -171,7 +216,7 @@ console.log(fileExt)
 
               if(feature.properties.gx_media_links) {
                 const filename = await  download(feature.properties.gx_media_links, `${uuidv4()}`)
-                console.log('--------', filename)
+
                 if(!filename) continue
                 await Uploads.upsert({
                 geoPointId: result[0].dataValues.id,
@@ -206,7 +251,7 @@ console.log(fileExt)
 
  static async getGeoPointFilter() {
   const results = await sequelize.query(`select distinct file_id, file_name from geo_points;`);
-  console.log(results[0])
+
   return results[0]
  }
 }
