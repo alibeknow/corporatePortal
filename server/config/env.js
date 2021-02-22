@@ -1,2 +1,3 @@
 import dotenv from 'dotenv'
-dotenv.config({ silent: true })
+import path from 'path'
+dotenv.config({ silent: true, path: path.resolve(process.cwd(), '.env.example') })

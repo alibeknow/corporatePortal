@@ -1,5 +1,5 @@
 import _ from './env'
-console.log(process.env)
+console.log('this env', process.env.DATABASE_URL)
 export default {
   env: process.env.NODE_ENV || 'development!!',
   port: process.env.PORT || 4000,
