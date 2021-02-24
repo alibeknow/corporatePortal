@@ -31,6 +31,15 @@ const downloadAsync = util.promisify(download)
 
 export default class GeoPointService {
   static async savePoint(params) {
+  
+    const {coordinates} = JSON.parse(params.coordinates)
+  
+    const wktCoordinates = `SRID=4326;POINT (${coordinates[0]} ${coordinates[1]})`
+    const selectedLocation = await sequelize.query(`SELECT id FROM cities WHERE ST_Intersects(coordinates , '${wktCoordinates}');`);
+  
+    if(selectedLocation[0].length > 0) {
+      params.cityId = selectedLocation[0][0].id
+    }
  
     const result = await GeoPoints.upsert(params);
     return result;
@@ -60,12 +69,12 @@ export default class GeoPointService {
       });
     }else {
        const filter = JSON.parse(params.filter)
-      console.log(filter)
+      
       const withoutNull = filter.filter(item=> item !== null)
       const filterHaveNull = filter.some(item=> item === null)
        if(filterHaveNull && filter.length == 1) {
 
-        console.log('filter contains null')
+       
        
         
         result = await GeoPoints.findAll({
@@ -138,7 +147,7 @@ export default class GeoPointService {
   }
 
   static async uploadFile({ files, userId, cityId }) {
-    
+   
     if (!files) {
     // res.send('File not found')
       throw new Error('Файл не найден');
@@ -199,7 +208,13 @@ export default class GeoPointService {
               parsedResult = feature.properties.description
             }
 
-            
+            const wktCoordinates = `SRID=4326;POINT (${feature.geometry.coordinates[0]} ${feature.geometry.coordinates[1]})`
+    const selectedLocation = await sequelize.query(`SELECT id FROM cities WHERE ST_Intersects(coordinates , '${wktCoordinates}');`);
+  
+  
+    if(selectedLocation[0].length > 0) {
+      cityId = selectedLocation[0][0].id
+    }
            
 
               const result = await GeoPoints.upsert({
