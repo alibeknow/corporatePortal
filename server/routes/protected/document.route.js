@@ -53,12 +53,8 @@ router.post(
  * @apiGroup Documents
  *
  *
- * @apiParamExample {json} Body
- *  
- *
- *
  * 
- * @apiSuccessExample {bynary} Пример ответа:
+ * @apiSuccessExample {json} Пример ответа:
  *     HTTP/1.1 200 OK
  *    bynary формат pdf
  */
