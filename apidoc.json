@@ -1,6 +1,6 @@
 {
-  "name": "Sberbank Service corporate portal",
+  "name": "QazAvtoJol map service",
   "version": "1.0.0",
-  "description": "Sberbank Service corporate portal REST API documentation",
-  "title": "Corporate portal API"
+  "description": "QazAvtoJol map service",
+  "title": "QazAvtoJol map service API"
 }

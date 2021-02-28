@@ -12,7 +12,7 @@ const router = new Router();
  * @apiGroup Auth
  * @apiParam (Body) {Object} request
  * @apiParam (Body) {String} request.login логин пользователя
- * @apiParam (Body) {String} request.password  пароль от ad или пароль от системы
+ * @apiParam (Body) {String} request.password  пароль от системы
  *
  * @apiParamExample {json} Body
  *  {

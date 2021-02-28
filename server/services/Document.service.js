@@ -47,7 +47,7 @@ console.log(path.join(process.cwd(), 'views', 'report-template.ejs'))
             // res.setHeader('Content-Type', 'application/pdf');
             // res.setHeader('Content-Disposition', 'attachment; filename=quote.pdf');
             // file.pipe(res);
-               res.json({'message': 'file created'})
+               res.json({'message': 'ok'})
             }
         });
        

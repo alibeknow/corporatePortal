@@ -139,7 +139,7 @@ export default class GeoPointService {
         geoPointId: pointId,
         image: filename
       })
-      return {message: 'work!'}
+      return {message: 'ok'}
     }catch(e) {
 
     }
