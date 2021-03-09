@@ -44,12 +44,12 @@ router.post(
 
 /**
  * @api {get} /api/v1.0/geopoints Получение маркеров
- * @api {get} /api/v1.0/geopoints?filter=["dc4da5bb-b982-42db-9aa6-8bc912ef63bf"] Получение маркеров с параметрами (id фильтров находятся в ручке /filterList)
+ * @api {get} /api/v1.0/geopoints?include=["dc4da5bb-b982-42db-9aa6-8bc912ef63bf"] Получение маркеров с параметрами (id фильтров находятся в ручке /filterList)
  * @apiVersion 1.0.0
  * @apiName GetPoint
  * @apiGroup Geopoints
  * @apiParam (Query) {Object} request
- * @apiParam (Body) {Object} request.filter фильтры для исключения точек из отображения
+ * @apiParam (Body) {Object} request.include фильтры для исключения точек из отображения
  *
  * @apiSuccessExample {string}  Пример ответа :
  *     HTTP/1.1 200 OK

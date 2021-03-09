@@ -62,17 +62,19 @@ export default class GeoPointService {
   static async getPointsByCity(params) {
     let result;
 
-  
-    if(!params.filter) {
-      result = await GeoPoints.findAll({
-        include: [{model: db.uploads}]
-      });
-    }else {
-       const filter = JSON.parse(params.filter)
+    if(!params.exclude && !params.include) {
+
+      // result = await GeoPoints.findAll({
+      //   include: [{model: db.uploads}]
+      // });
+      result = []
+    }else if(params.exclude) {
+ 
+       const exclude = JSON.parse(params.exclude)
       
-      const withoutNull = filter.filter(item=> item !== null)
-      const filterHaveNull = filter.some(item=> item === null)
-       if(filterHaveNull && filter.length == 1) {
+      const withoutNull = exclude.filter(item=> item !== null)
+      const filterHaveNull = exclude.some(item=> item === null)
+       if(filterHaveNull && exclude.length == 1) {
 
        
        
@@ -90,7 +92,7 @@ export default class GeoPointService {
           }
         });
         
-       }else if(filterHaveNull && filter.length == 1) {
+       }else if(filterHaveNull) {
         result = await GeoPoints.findAll({
           include: [{model: db.uploads}],
           where: {
@@ -118,6 +120,58 @@ export default class GeoPointService {
        }
        
        
+    }else {
+     
+ 
+      const include = JSON.parse(params.include)
+      
+      const withoutNull = include.filter(item=> item !== null)
+      const filterHaveNull = include.some(item=> item === null)
+      if(filterHaveNull && include.length == 1) {
+
+       
+       
+        
+        result = await GeoPoints.findAll({
+          include: [{model: db.uploads}],
+          where: {
+            file_id: {
+              
+                //[Op.notIn]: filter,
+                [Op.is]: null,
+             
+              
+          }
+          }
+        });
+        
+       }else if(filterHaveNull) {
+        result = await GeoPoints.findAll({
+          include: [{model: db.uploads}],
+          where: {
+            file_id: {
+              [Op.or]: {
+                [Op.in]: withoutNull,
+                [Op.is]: null,
+              } 
+            } 
+          }
+        });
+       }else {
+        result = await GeoPoints.findAll({
+          include: [{model: db.uploads}],
+          where: {
+            file_id: {
+              [Op.or]: {
+                [Op.in]: withoutNull,
+               
+              } 
+            } 
+          }
+        });
+       }
+
+
     }
 
     return result;
