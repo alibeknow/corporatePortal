@@ -3,6 +3,7 @@ import fs, { createWriteStream } from 'fs';
 import util from 'util';
 import request from 'request'
 const { Op } = require("sequelize");
+import stringHash from 'string-hash'
 
 import download from '../utils/downloadFile'
 import unzipper from 'unzipper';
@@ -18,7 +19,8 @@ import db from '../config/sequelize';
 
 
 import { DOMParser } from 'xmldom'
-import tj from 'togeojson'
+const DomParserNew = require('dom-parser');
+const tj = require("@tmcw/togeojson");
 import { html2json } from 'html2json'
 import { Model } from 'sequelize';
 import { REPL_MODE_SLOPPY } from 'repl';
@@ -28,6 +30,7 @@ import { link } from '@hapi/joi';
 
 const readFileAsync = util.promisify(fs.readFile);
 const downloadAsync = util.promisify(download)
+const parserNew = DomParserNew()
 
 export default class GeoPointService {
   static async savePoint(params) {
@@ -211,26 +214,31 @@ export default class GeoPointService {
       if (!/\.(kml|kmz)$/i.test(file.name)) {
         throw new Error('Неправильный тип файла');
       }
-
-      if (!fs.existsSync(`${process.cwd()}/tempUpload`)) {
-        fs.mkdirSync(`${process.cwd()}/tempUpload/`);
+      //const fileName = file.name.slice(0, file.name.length - 4)
+      const fileNameHash = stringHash(file.name)
+     
+      if (!fs.existsSync(`${process.cwd()}/tempUpload/${fileNameHash}`)) {
+        fs.mkdirSync(`${process.cwd()}/tempUpload/${fileNameHash}`);
       }
 
     const  moveFileAsync = util.promisify(file.mv)
+    
+   
     try {
-      await  moveFileAsync(`${process.cwd()}/tempUpload/temp.kmz`)
-      await readFileAsyncUtil(`${process.cwd()}/tempUpload/temp.kmz`, `${process.cwd()}/tempUpload/`)
+      await  moveFileAsync(`${process.cwd()}/tempUpload/${fileNameHash}/temp.kmz`)
+      await readFileAsyncUtil(`${process.cwd()}/tempUpload/${fileNameHash}/temp.kmz`, `${process.cwd()}/tempUpload/${fileNameHash}`)
 
-        if (fs.existsSync(`${process.cwd()}/tempUpload/temp.kmz`)) {
-            fs.unlink(`${process.cwd()}/tempUpload/temp.kmz`, (err) => {
+        if (fs.existsSync(`${process.cwd()}/tempUpload/${fileNameHash}/temp.kmz`)) {
+            fs.unlink(`${process.cwd()}/tempUpload/${fileNameHash}/temp.kmz`, (err) => {
               if (err) throw err;
             });
           }
-          const kmlString = await readFileAsync(`${process.cwd()}/tempUpload/doc.kml`, 'utf8');
-          const kml = new DOMParser().parseFromString(kmlString);
+          const kmlString = await readFileAsync(`${process.cwd()}/tempUpload/${fileNameHash}/doc.kml`, 'utf8');
+         
+          const kml = new DOMParser().parseFromString(kmlString, 'text/xml');
           const convertedWithStyles = tj.kml(kml, { styles: true });
-         if (fs.existsSync(`${process.cwd()}/tempUpload/doc.kml`)) {
-          fs.unlink(`${process.cwd()}/tempUpload/doc.kml`, (err) => {
+         if (fs.existsSync(`${process.cwd()}/tempUpload/${fileNameHash}/doc.kml`)) {
+          fs.unlink(`${process.cwd()}/tempUpload/${fileNameHash}/doc.kml`, (err) => {
             if (err) throw err;
           });
         }
@@ -238,6 +246,7 @@ export default class GeoPointService {
           fs.mkdirSync(path.join(process.cwd(), 'uploads'));
         }
         for (const feature of convertedWithStyles.features) {
+          
             let parsedResult
             if(feature.geometry.type !== 'Point') continue
             const coordinateString = `SRID=4326;POINT (${feature.geometry.coordinates[0]} ${feature.geometry.coordinates[1]})`
@@ -279,7 +288,8 @@ export default class GeoPointService {
                 name: feature.properties.name,
                 google_link: feature.properties.gx_media_links,
                 file_id: fileId,
-                file_name: file.name
+                file_name: file.name,
+                icon: fileNameHash + '/' + feature.properties.icon
               });
   
 

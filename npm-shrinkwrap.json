@@ -2251,6 +2251,11 @@
         "defer-to-connect": "^1.0.1"
       }
     },
+    "@tmcw/togeojson": {
+      "version": "4.3.0",
+      "resolved": "https://registry.npmjs.org/@tmcw/togeojson/-/togeojson-4.3.0.tgz",
+      "integrity": "sha512-naEKUYY7CbHQoj1R6e+DiEO6yrCwbX6NkLuy2AXkCD9zvsvWEY+dbY8mcD254GNc+07NROSjuTMocicn3Tigsg=="
+    },
     "@types/anymatch": {
       "version": "1.3.1",
       "resolved": "https://registry.npmjs.org/@types/anymatch/-/anymatch-1.3.1.tgz",
@@ -6938,6 +6943,11 @@
       "requires": {
         "utila": "~0.4"
       }
+    },
+    "dom-parser": {
+      "version": "0.1.6",
+      "resolved": "https://registry.npmjs.org/dom-parser/-/dom-parser-0.1.6.tgz",
+      "integrity": "sha512-3nVRKbLEwmGfghLoeT1dxlK/0votalnOfasP+8VCHYDfDuCETY4LeMblfOeqww6XZk2ymZ1Uewy/hVad6Dy3yw=="
     },
     "dom-serializer": {
       "version": "0.1.1",
@@ -20757,6 +20767,11 @@
       "version": "0.2.1",
       "resolved": "https://registry.npmjs.org/string-convert/-/string-convert-0.2.1.tgz",
       "integrity": "sha1-aYLMMEn7tM2F+LJFaLnZvznu/5c="
+    },
+    "string-hash": {
+      "version": "1.1.3",
+      "resolved": "https://registry.npmjs.org/string-hash/-/string-hash-1.1.3.tgz",
+      "integrity": "sha1-6Kr8CsGFW0Zmkp7X3RJ1311sgRs="
     },
     "string-length": {
       "version": "4.0.1",

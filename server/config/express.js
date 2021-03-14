@@ -82,6 +82,7 @@ app.use((err, req, res, next) => {
   return next(err);
 });
 app.use('/uploads', express.static('uploads'));
+app.use('/tempUpload', express.static('tempUpload'))
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {

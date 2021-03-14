@@ -34,6 +34,9 @@ module.exports = (sequelize, DataTypes) => {
       file_name: {
         type: DataTypes.TEXT,
       },
+      icon: {
+        type: DataTypes.TEXT,
+      }
     },
     {
       sequelize,
